@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Tabs from "../components/Tab";
 import ModalUpadateArticle from "../components/ModalUpadateArticle";
 import ModalUpadateWorkshop from "../components/ModalUpadateWorkshop";
+import ModalUpadateEducation from "../components/ModalUpadateEducation";
 
 export default function Profile() {
   const [users, setUsers] = useState();
@@ -338,6 +339,7 @@ export default function Profile() {
                     </td>
 
                     <td className="py-3 px-4 flex space-x-2 items-center">
+                      <ModalUpadateEducation educationId={education._id} />
                       <button
                         onClick={() => handleRemoveEducation(education._id)}
                       >
