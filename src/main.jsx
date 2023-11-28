@@ -10,6 +10,8 @@ import Signin from "./Signin.jsx";
 import Signup from "./Signup.jsx";
 import Profile from "./Profile.jsx";
 import CreateArticle from "./CreateArticle.jsx";
+import Articles from "./Articles.jsx";
+import Article from "./Article.jsx";
 import.meta.env;
 
 const router = createBrowserRouter([
@@ -58,6 +60,14 @@ const router = createBrowserRouter([
         <CreateArticle />
       </AuthMiddleware>
     ),
+  },
+  {
+    path: "/articles",
+    element: <Articles />,
+  },
+  {
+    path: "/articles/:id",
+    element: <Article />,
   },
 ]);
 
