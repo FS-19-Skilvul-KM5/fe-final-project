@@ -1,4 +1,4 @@
-# Vite JS + React JS + Tailwind CSS - Proyek Sistem Pendidikan Online
+# Vite JS + React JS + Tailwind CSS - Proyek Ecochange
 
 ## Deskripsi Proyek:
 
