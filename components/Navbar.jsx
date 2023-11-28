@@ -1,8 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [menuaOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    Cookies.remove("token");
+
+    navigate("/signin");
+  };
   return (
     <nav className="h-[78px] sticky top-0 bg-white z-10">
       <div className="flex items-center justify-between relative w-full px-[50px] h-full">
@@ -47,19 +66,38 @@ export default function Navbar() {
           </a>
         </div>
         <div className="flex space-x-2">
-
-          <a
-            href="/signin"
-            className="h-[38px] text-sm text-[#186F65] flex items-center px-[20px] font-bold rounded-full"
-          >
-            Sign in
-          </a>
-          <a
-            href="/signup"
-            className="h-[38px] text-sm flex items-center bg-[#186F65] text-white px-[20px] font-bold rounded-full"
-          >
-            Sign up
-          </a>
+          {isLoggedIn ? (
+            <>
+              <a
+                href="/profile"
+                className="h-[38px] text-sm flex items-center bg-[#186F65] text-white px-[20px] font-bold rounded-full"
+              >
+                Profile
+              </a>
+              <button
+                href="/signin"
+                className="h-[38px] text-sm text-[#186F65] flex items-center px-[20px] font-bold rounded-full"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
+            </>
+          ) : (
+            <>
+              <a
+                href="/signin"
+                className="h-[38px] text-sm text-[#186F65] flex items-center px-[20px] font-bold rounded-full"
+              >
+                Sign in
+              </a>
+              <a
+                href="/signup"
+                className="h-[38px] text-sm flex items-center bg-[#186F65] text-white px-[20px] font-bold rounded-full"
+              >
+                Sign up
+              </a>
+            </>
+          )}
 
           <button
             onClick={() => setMenuOpen(!menuaOpen)}

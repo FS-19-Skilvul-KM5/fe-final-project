@@ -8,6 +8,7 @@ import MapMini from "./MapMini.jsx";
 import AuthMiddleware from "../middleware/AuthMiddleware.jsx";
 import Signin from "./Signin.jsx";
 import Signup from "./Signup.jsx";
+import Profile from "./Profile.jsx";
 import.meta.env;
 
 const router = createBrowserRouter([
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
     element: (
       <AuthMiddleware>
         <Signup />
+      </AuthMiddleware>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <AuthMiddleware>
+        <Profile />
       </AuthMiddleware>
     ),
   },
