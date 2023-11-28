@@ -1,15 +1,14 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Tabs from "../components/Tab";
+import ModalUpadateArticle from "../components/ModalUpadateArticle";
 
 export default function Profile() {
   const [users, setUsers] = useState();
   const [currentUser, setCurrentUser] = useState();
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -65,6 +64,42 @@ export default function Profile() {
 
     fetchUsers();
   }, []);
+
+  const handleRemoveArticle = async (articleId) => {
+    const token = Cookies.get("token");
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/articles/${articleId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      if (response.ok) {
+        setMessage(`Education with ID ${articleId} deleted successfully.`);
+
+        setTimeout(() => {
+          setMessage("");
+          // eslint-disable-next-line no-undef
+          window?.location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      setMessage(`Error deleting education: ${error}`);
+
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+    }
+  };
 
 
   const tabs = [
@@ -189,7 +224,45 @@ export default function Profile() {
               <th className="py-2 px-4 text-left">Actions</th>
             </tr>
           </thead>
+          <tbody>
+            {Array.isArray(currentUser?.articles) &&
+              currentUser?.articles.map((article, index) => {
+                return (
+                  <tr key={index}>
+                    <td className="py-2 px-4 border-b border-r w-5 overflow-hidden cursor-pointer">
+                      <div className="text-ellipsis overflow-hidden w-[50px]">
+                        {article._id}
+                      </div>
+                    </td>
+                    <td className="py-2 px-4 ">
+                      <img
+                        src={article.image.url}
+                        alt=""
+                        className="h-[48px] w-[48px] rounded-lg object-cover"
+                      />
+                    </td>
+                    <td className="py-2 px-4 border-b border-r  overflow-hidden lg:w-auto w-[200px]">
+                      <div className="line-clamp-2">{article.title}</div>
+                    </td>
 
+                    <td className="py-3 px-4 flex space-x-2 items-center">
+                      <button onClick={() => handleRemoveArticle(article._id)}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="#110e0e"
+                          viewBox="0 0 256 256"
+                        >
+                          <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+                        </svg>
+                      </button>
+                      <ModalUpadateArticle articleId={article._id} />
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
         </table>
       ),
     },
