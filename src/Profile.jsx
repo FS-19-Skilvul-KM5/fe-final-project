@@ -138,6 +138,41 @@ export default function Profile() {
     }
   };
 
+  const handleRemoveEducation = async (educationId) => {
+    const token = Cookies.get("token");
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/educations/${educationId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      if (response.ok) {
+        setMessage(`Education with ID ${educationId} deleted successfully.`);
+
+        setTimeout(() => {
+          setMessage("");
+          // eslint-disable-next-line no-undef
+          window?.location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      setMessage(`Error deleting education: ${error}`);
+
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+    }
+  };
+
 
   const tabs = [
     {
@@ -285,6 +320,42 @@ export default function Profile() {
               <th className="py-2 px-4 text-left">Actions</th>
             </tr>
           </thead>
+          <tbody>
+            {Array.isArray(currentUser?.educations) &&
+              currentUser?.educations.map((education, index) => {
+                return (
+                  <tr className="border-b" key={index}>
+                    <td className="py-2 px-4 border-r w-5 overflow-hidden cursor-pointer">
+                      <div className="text-ellipsis overflow-hidden w-[50px]">
+                        {education._id}
+                      </div>
+                    </td>
+                    <td className="py-2 px-4  border-r  overflow-hidden  lg:w-auto w-[200px]">
+                      <div className="line-clamp-2 ">{education.title}</div>
+                    </td>
+                    <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px]">
+                      <div className="line-clamp-2 ">{education.video}</div>
+                    </td>
+
+                    <td className="py-3 px-4 flex space-x-2 items-center">
+                      <button
+                        onClick={() => handleRemoveEducation(education._id)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="#110e0e"
+                          viewBox="0 0 256 256"
+                        >
+                          <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
         </table>
       ),
     },
@@ -388,6 +459,22 @@ export default function Profile() {
                     viewBox="0 0 256 256"
                   >
                     <path d="M248,120h-8V88a16,16,0,0,0-16-16H208V64a16,16,0,0,0-16-16H168a16,16,0,0,0-16,16v56H104V64A16,16,0,0,0,88,48H64A16,16,0,0,0,48,64v8H32A16,16,0,0,0,16,88v32H8a8,8,0,0,0,0,16h8v32a16,16,0,0,0,16,16H48v8a16,16,0,0,0,16,16H88a16,16,0,0,0,16-16V136h48v56a16,16,0,0,0,16,16h24a16,16,0,0,0,16-16v-8h16a16,16,0,0,0,16-16V136h8a8,8,0,0,0,0-16ZM32,168V88H48v80Zm56,24H64V64H88V192Zm104,0H168V64h24V175.82c0,.06,0,.12,0,.18s0,.12,0,.18V192Zm32-24H208V88h16Z"></path>
+                  </svg>
+                </a>
+                <a
+                  href="/create/education"
+                  className="h-[38px] group text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full"
+                >
+                  Create{" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="#186f65"
+                    className="ml-1 group-hover:fill-white"
+                    viewBox="0 0 256 256"
+                  >
+                    <path d="M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V240a8,8,0,0,0,16,0V199.51a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,200c-43.27,0-68.72-21.14-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L176,143.47v46.34C163.4,195.69,147.52,200,128,200Zm80-33.75a97.83,97.83,0,0,1-16,14.25V134.93l16-8.53ZM188,118.94l-.22-.13-56-29.87a8,8,0,0,0-7.52,14.12L171,128l-43,22.93L25,96,128,41.07,231,96Z"></path>
                   </svg>
                 </a>
               </>
