@@ -90,7 +90,7 @@ fe-final-project/
    npm run dev
    ```
 
-5. Buka [http://localhost:3000](http://localhost:5173) di browser untuk melihat proyek.
+5. Buka [http://localhost:5173](http://localhost:5173) di browser untuk melihat proyek.
 
 ## Catatan:
 
