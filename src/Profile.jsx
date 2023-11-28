@@ -1,8 +1,11 @@
-import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Tabs from "../components/Tab";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import Modal from "react-modal";
+import ModalUpadateEducation from "../components/ModalUpadateEducation";
 import ModalUpadateArticle from "../components/ModalUpadateArticle";
 import ModalUpadateWorkshop from "../components/ModalUpadateWorkshop";
 
@@ -10,6 +13,16 @@ export default function Profile() {
   const [users, setUsers] = useState();
   const [currentUser, setCurrentUser] = useState();
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -65,6 +78,160 @@ export default function Profile() {
 
     fetchUsers();
   }, []);
+
+  const handleResetRole = async (userId) => {
+    try {
+      const token = Cookies.get("token");
+
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/users/${userId}/reset-role`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      if (response.ok) {
+        setMessage(`Role reset successfully for user with ID ${userId}`);
+
+        setTimeout(() => {
+          setMessage("");
+
+          // eslint-disable-next-line no-undef
+          window?.location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Error resetting role:", error);
+    }
+  };
+
+  const customModalStyles = {
+    content: {
+      width: "60%",
+      margin: "auto",
+      border: "1px solid #ccc",
+      borderRadius: "8px",
+      padding: "20px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      zIndex: 20,
+    },
+  };
+
+  const handleGrantRole = async (userId) => {
+    try {
+      const token = Cookies.get("token");
+
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/users/${userId}/set-role`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      if (response.ok) {
+        setMessage(`Role granted successfully to user with ID ${userId}.`);
+
+        setTimeout(() => {
+          setMessage("");
+          // eslint-disable-next-line no-undef
+          window?.location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Error granting role:", error);
+    }
+  };
+
+  const handleRemoveUser = async (userId) => {
+    try {
+      const token = Cookies.get("token");
+
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/users/${userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const message = await response.json();
+
+      if (!response.ok) {
+        setMessage(message.error);
+
+        setTimeout(() => {
+          setMessage("");
+        }, 2000);
+      }
+
+      if (response.ok) {
+        setMessage(`User with ID ${userId} removed successfully.`);
+
+        setTimeout(() => {
+          setMessage("");
+          Cookies.remove("token");
+          navigate("/signin");
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Error removing user:", error);
+    }
+  };
+
+  const handleRemoveEducation = async (educationId) => {
+    const token = Cookies.get("token");
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/educations/${educationId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      if (response.ok) {
+        setMessage(`Education with ID ${educationId} deleted successfully.`);
+
+        setTimeout(() => {
+          setMessage("");
+          // eslint-disable-next-line no-undef
+          window?.location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      setMessage(`Error deleting education: ${error}`);
+
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+    }
+  };
 
   const handleRemoveArticle = async (articleId) => {
     const token = Cookies.get("token");
@@ -138,42 +305,6 @@ export default function Profile() {
     }
   };
 
-  const handleRemoveEducation = async (educationId) => {
-    const token = Cookies.get("token");
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/educations/${educationId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      if (response.ok) {
-        setMessage(`Education with ID ${educationId} deleted successfully.`);
-
-        setTimeout(() => {
-          setMessage("");
-          // eslint-disable-next-line no-undef
-          window?.location.reload();
-        }, 2000);
-      }
-    } catch (error) {
-      setMessage(`Error deleting education: ${error}`);
-
-      setTimeout(() => {
-        setMessage("");
-      }, 2000);
-    }
-  };
-
-
   const tabs = [
     {
       label: "User",
@@ -203,7 +334,7 @@ export default function Profile() {
                       {currentUser?.role === "admin" ||
                         currentUser?.role === "root" ? (
                         <>
-                          <button >
+                          <button onClick={() => handleRemoveUser(user._id)}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="20"
@@ -217,7 +348,7 @@ export default function Profile() {
 
                           {user?.role === "admin" ? (
                             <>
-                              <button >
+                              <button onClick={() => handleResetRole(user._id)}>
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   width="20"
@@ -230,17 +361,19 @@ export default function Profile() {
                               </button>
                             </>
                           ) : (
-                            <button >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                fill="#201818"
-                                viewBox="0 0 256 256"
-                              >
-                                <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"></path>
-                              </svg>
-                            </button>
+                            <>
+                              {user?.role != "root" ? <button onClick={() => handleGrantRole(user._id)}>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="20"
+                                  height="20"
+                                  fill="#201818"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"></path>
+                                </svg>
+                              </button> : null}
+                            </>
                           )}
                         </>
                       ) : null}
@@ -338,6 +471,7 @@ export default function Profile() {
                     </td>
 
                     <td className="py-3 px-4 flex space-x-2 items-center">
+                      <ModalUpadateEducation educationId={education._id} />
                       <button
                         onClick={() => handleRemoveEducation(education._id)}
                       >
@@ -479,11 +613,31 @@ export default function Profile() {
                 </a>
               </>
             ) : null}
+            <Modal
+              isOpen={isModalOpen}
+              onRequestClose={handleCloseModal}
+              contentLabel="Education Modal"
+              style={customModalStyles} // Apply custom styles here
+            >
+              <button onClick={handleCloseModal}>Close</button>
+            </Modal>
+            <button
+              onClick={() => handleOpenModal()}
+              className="h-[38px] group text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full"
+            >
+              Update Profile
+            </button>
+            <button
+              onClick={() => handleRemoveUser(currentUser?._id)}
+              className="h-[38px] group text-sm flex items-center hover:bg-[#f85858] transition-all delay-75 border border-[#f85858] text-[#f85858] hover:text-white px-[20px] font-bold rounded-full"
+            >
+              Remove Account
+            </button>
           </div>
         </div>
 
         <Tabs role={currentUser?.role} tabs={tabs} />
-      </div >
+      </div>
       <Footer />
     </>
   );
