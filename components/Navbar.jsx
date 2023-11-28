@@ -47,6 +47,20 @@ export default function Navbar() {
           </a>
         </div>
         <div className="flex space-x-2">
+
+          <a
+            href="/signin"
+            className="h-[38px] text-sm text-[#186F65] flex items-center px-[20px] font-bold rounded-full"
+          >
+            Sign in
+          </a>
+          <a
+            href="/signup"
+            className="h-[38px] text-sm flex items-center bg-[#186F65] text-white px-[20px] font-bold rounded-full"
+          >
+            Sign up
+          </a>
+
           <button
             onClick={() => setMenuOpen(!menuaOpen)}
             className="lg:invisible visible"

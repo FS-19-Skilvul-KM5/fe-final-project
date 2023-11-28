@@ -5,6 +5,9 @@ import About from "./About.jsx";
 import App from "./App.jsx";
 import "./index.css";
 import MapMini from "./MapMini.jsx";
+import AuthMiddleware from "../middleware/AuthMiddleware.jsx";
+import Signin from "./Signin.jsx";
+import Signup from "./Signup.jsx";
 import.meta.env;
 
 const router = createBrowserRouter([
@@ -21,7 +24,23 @@ const router = createBrowserRouter([
     path: "/mapMini",
     element: <MapMini />,
   },
-
+  ,
+  {
+    path: "/signin",
+    element: (
+      <AuthMiddleware>
+        <Signin />
+      </AuthMiddleware>
+    ),
+  },
+  {
+    path: "/signup",
+    element: (
+      <AuthMiddleware>
+        <Signup />
+      </AuthMiddleware>
+    ),
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
