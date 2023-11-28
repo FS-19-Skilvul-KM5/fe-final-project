@@ -101,6 +101,42 @@ export default function Profile() {
     }
   };
 
+  const handleRemoveWorkshop = async (workshopId) => {
+    const token = Cookies.get("token");
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/workshop/${workshopId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      if (response.ok) {
+        setMessage(`Education with ID ${workshopId} deleted successfully.`);
+
+        setTimeout(() => {
+          setMessage("");
+          // eslint-disable-next-line no-undef
+          window?.location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      setMessage(`Error deleting education: ${error}`);
+
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+    }
+  };
+
 
   const tabs = [
     {
@@ -193,6 +229,44 @@ export default function Profile() {
               <th className="py-2 px-4 text-left">Actions</th>
             </tr>
           </thead>
+          <tbody>
+            {Array.isArray(currentUser?.workshop) &&
+              currentUser?.workshop.map((workshop, index) => {
+                return (
+                  <tr className="border-b" key={index}>
+                    <td className="py-2 px-4 border-b border-r w-5 overflow-hidden cursor-pointer">
+                      <div className="text-ellipsis overflow-hidden w-[50px]">
+                        {workshop._id}
+                      </div>
+                    </td>
+
+                    <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px]">
+                      <div className="line-clamp-2 ">{workshop.title}</div>
+                    </td>
+
+                    <td className="py-2 px-4 border-r  overflow-hidden  w-[200px] lg:w-auto">
+                      <div className="line-clamp-2 ">{workshop.tujuan}</div>
+                    </td>
+
+                    <td className="py-2 px-4  flex space-x-2 items-center">
+                      <button
+                        onClick={() => handleRemoveWorkshop(workshop._id)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="#110e0e"
+                          viewBox="0 0 256 256"
+                        >
+                          <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
         </table>
       ),
     },
@@ -296,6 +370,22 @@ export default function Profile() {
                     viewBox="0 0 256 256"
                   >
                     <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM184,96a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,96Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,128Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,160Z"></path>
+                  </svg>
+                </a>
+                <a
+                  href="/create/workshop"
+                  className="h-[38px] group text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full"
+                >
+                  Create
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="#186f65"
+                    className="ml-1 group-hover:fill-white"
+                    viewBox="0 0 256 256"
+                  >
+                    <path d="M248,120h-8V88a16,16,0,0,0-16-16H208V64a16,16,0,0,0-16-16H168a16,16,0,0,0-16,16v56H104V64A16,16,0,0,0,88,48H64A16,16,0,0,0,48,64v8H32A16,16,0,0,0,16,88v32H8a8,8,0,0,0,0,16h8v32a16,16,0,0,0,16,16H48v8a16,16,0,0,0,16,16H88a16,16,0,0,0,16-16V136h48v56a16,16,0,0,0,16,16h24a16,16,0,0,0,16-16v-8h16a16,16,0,0,0,16-16V136h8a8,8,0,0,0,0-16ZM32,168V88H48v80Zm56,24H64V64H88V192Zm104,0H168V64h24V175.82c0,.06,0,.12,0,.18s0,.12,0,.18V192Zm32-24H208V88h16Z"></path>
                   </svg>
                 </a>
               </>
