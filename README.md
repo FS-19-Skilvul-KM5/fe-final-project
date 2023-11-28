@@ -1,8 +1,20 @@
-# Vite JS + React JS + Tailwind CSS - Proyek Ecochange
+# Proyek Ecochange
 
 ## Deskripsi Proyek:
 
 Proyek ini adalah sebuah sistem yang dikembangkan menggunakan Vite JS sebagai bundler, React JS sebagai framework JavaScript, dan Tailwind CSS untuk styling. Proyek ini dilengkapi dengan berbagai fitur, termasuk artikel dengan Markdown, workshop , konten education berupa video, autentikasi login dengan JWT, dan manajemen pengguna.
+
+## Teknologi
+- vite Js + react Js
+- tailwind Css
+- eslint
+- react-modal
+- js-cookie
+- date-fns
+- @uiw/react-markdown-preview
+- prop-types
+- react-router-dom
+- react-dom
 
 ## Screenshot:
 ![image](https://github.com/FS-19-Skilvul-KM5/fe-final-project/assets/139745129/b082a008-fb76-49b7-b419-6e2b72b63ce5)
