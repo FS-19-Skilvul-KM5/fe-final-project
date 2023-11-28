@@ -12,6 +12,9 @@ import Profile from "./Profile.jsx";
 import CreateArticle from "./CreateArticle.jsx";
 import Articles from "./Articles.jsx";
 import Article from "./Article.jsx";
+import Workshop from "./Workshop.jsx";
+import Workshops from "./Workshops.jsx";
+import CreateWorkshop from "./CreateWorkshop.jsx";
 import.meta.env;
 
 const router = createBrowserRouter([
@@ -68,6 +71,22 @@ const router = createBrowserRouter([
   {
     path: "/articles/:id",
     element: <Article />,
+  },
+  {
+    path: "/workshop",
+    element: <Workshops />,
+  },
+  {
+    path: "/workshop/:id",
+    element: <Workshop />,
+  },
+  {
+    path: "/create/workshop",
+    element: (
+      <AuthMiddleware>
+        <CreateWorkshop />
+      </AuthMiddleware>
+    ),
   },
 ]);
 

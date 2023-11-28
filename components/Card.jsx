@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-function Card({ imageUrl, title, content, date, link }) {
+function Card({ type, price, imageUrl, title, content, date, link }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -15,22 +15,44 @@ function Card({ imageUrl, title, content, date, link }) {
 
 
   function HandleType() {
-    return (
-      <a href={link} className="group">
-        <img
-          src={imageUrl}
-          alt=""
-          className="rounded-xl object-cover w-full h-[180px]"
-        />
-        <div className="flex flex-col mt-3">
-          <h1 className="font-semibold group-hover:underline text-lg mt-2 line-clamp-2">
-            {title}
-          </h1>
-          <p className="text-black/80 text-sm mt-1">{content}</p>
-          <span className="text-black/60 font-medium text-sm">{date}</span>
-        </div>
-      </a>
-    );
+    if (type === "workshop") {
+      return (
+        <a href={link} className="group">
+          <img
+            src={imageUrl}
+            alt=""
+            className="rounded-xl object-cover w-full h-[180px]"
+          />
+          <div className="flex flex-col mt-3">
+            <h1 className="font-semibold group-hover:underline text-lg mt-2 line-clamp-2">
+              {title}
+            </h1>
+            <span className="mt-2 text-sm font-semibold">
+              {price == "0" ? "free" : `$ ${price}`}
+            </span>
+            <p className="text-black/80 text-sm mt-1">{content}</p>
+            <span className="text-black/60 font-medium text-sm">{date}</span>
+          </div>
+        </a>
+      );
+    } else {
+      return (
+        <a href={link} className="group">
+          <img
+            src={imageUrl}
+            alt=""
+            className="rounded-xl object-cover w-full h-[180px]"
+          />
+          <div className="flex flex-col mt-3">
+            <h1 className="font-semibold group-hover:underline text-lg mt-2 line-clamp-2">
+              {title}
+            </h1>
+            <p className="text-black/80 text-sm mt-1">{content}</p>
+            <span className="text-black/60 font-medium text-sm">{date}</span>
+          </div>
+        </a>
+      );
+    }
   }
 
   return <>{HandleType()}</>;
