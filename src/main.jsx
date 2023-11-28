@@ -15,6 +15,8 @@ import Article from "./Article.jsx";
 import Workshop from "./Workshop.jsx";
 import Workshops from "./Workshops.jsx";
 import CreateWorkshop from "./CreateWorkshop.jsx";
+import CreateEducation from "./CreateEducation.jsx";
+import SerialEducation from "./SerialEducation.jsx";
 import.meta.env;
 
 const router = createBrowserRouter([
@@ -87,6 +89,18 @@ const router = createBrowserRouter([
         <CreateWorkshop />
       </AuthMiddleware>
     ),
+  },
+  {
+    path: "/create/education",
+    element: (
+      <AuthMiddleware>
+        <CreateEducation />
+      </AuthMiddleware>
+    ),
+  },
+  {
+    path: "/educations",
+    element: <SerialEducation />,
   },
 ]);
 
