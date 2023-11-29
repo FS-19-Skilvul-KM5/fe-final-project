@@ -328,7 +328,11 @@ export default function Profile() {
                         {user._id}
                       </div>
                     </td>
-                    <td className="py-2 px-4  border-r">{user?.username}</td>
+                    <td className="py-2 px-4  border-r">
+                      <div className="text-ellipsis md:w-auto overflow-hidden w-[50px] lg:w-auto">
+                        {user?.username}
+                      </div>
+                    </td>
                     <td className="py-2 px-4  border-r">{user?.role}</td>
                     <td className="py-2 px-4  flex space-x-2 items-center">
                       {currentUser?.role === "admin" ||
@@ -410,7 +414,8 @@ export default function Profile() {
                     </td>
 
                     <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px]">
-                      <div className="line-clamp-2 ">{workshop.title}</div>
+
+                      <div className="line-clamp-2 text-ellipsis overflow-hidden w-[30px] md:w-auto lg:w-auto">{workshop.title}</div>
                     </td>
 
                     <td className="py-2 px-4 border-r  overflow-hidden  w-[200px] lg:w-auto">
@@ -464,7 +469,7 @@ export default function Profile() {
                       </div>
                     </td>
                     <td className="py-2 px-4  border-r  overflow-hidden  lg:w-auto w-[200px]">
-                      <div className="line-clamp-2 ">{education.title}</div>
+                      <div className="line-clamp-2 text-ellipsis overflow-hidden md:w-auto w-[30px] lg:w-auto">{education.title}</div>
                     </td>
                     <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px]">
                       <div className="line-clamp-2 ">{education.video}</div>
@@ -523,7 +528,7 @@ export default function Profile() {
                       />
                     </td>
                     <td className="py-2 px-4 border-b border-r  overflow-hidden lg:w-auto w-[200px]">
-                      <div className="line-clamp-2">{article.title}</div>
+                      <div className="line-clamp-2 text-ellipsis overflow-hidden md:w-auto w-[50px] lg:w-auto">{article.title}</div>
                     </td>
 
                     <td className="py-3 px-4 flex space-x-2 items-center">
@@ -557,7 +562,7 @@ export default function Profile() {
           {message}
         </div>
       )}
-      <div className="container mx-auto mt-8 px-[20px]">
+      <div className="container mx-auto mt-8 lg:px-[20px] px-[10px]">
         <div className="flex flex-col lg:flex-row lg:justify-between mb-3">
           <h2 className="text-3xl font-semibold mb-4">User Dashboard</h2>
           <div className="flex space-x-2 flex-wrap gap-2">
@@ -613,20 +618,7 @@ export default function Profile() {
                 </a>
               </>
             ) : null}
-            <Modal
-              isOpen={isModalOpen}
-              onRequestClose={handleCloseModal}
-              contentLabel="Education Modal"
-              style={customModalStyles} // Apply custom styles here
-            >
-              <button onClick={handleCloseModal}>Close</button>
-            </Modal>
-            <button
-              onClick={() => handleOpenModal()}
-              className="h-[38px] group text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full"
-            >
-              Update Profile
-            </button>
+
             <button
               onClick={() => handleRemoveUser(currentUser?._id)}
               className="h-[38px] group text-sm flex items-center hover:bg-[#f85858] transition-all delay-75 border border-[#f85858] text-[#f85858] hover:text-white px-[20px] font-bold rounded-full"

@@ -95,9 +95,8 @@ function ModalUpadateWorkshop({ workshopId }) {
     try {
       setIsLoading(true);
 
-      const apiUrl = `${
-        import.meta.env.VITE_REACT_APP_API_URL
-      }/workshop/${workshopId}`;
+      const apiUrl = `${import.meta.env.VITE_REACT_APP_API_URL
+        }/workshop/${workshopId}`;
       const formData = new FormData();
       formData.append("title", title);
       formData.append("files", image);
@@ -173,17 +172,19 @@ function ModalUpadateWorkshop({ workshopId }) {
 
   const customModalStyles = {
     content: {
-      width: "60%",
       margin: "auto",
       border: "1px solid #ccc",
       borderRadius: "8px",
       padding: "20px",
+      backgroundColor: 'white'
     },
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
       zIndex: 20,
+      padding: '20px'
     },
   };
+
 
   return (
     <>
@@ -197,10 +198,12 @@ function ModalUpadateWorkshop({ workshopId }) {
         onRequestClose={handleCloseModal}
         contentLabel="Education Modal"
         style={customModalStyles}
+        className="w-full lg:w-[60%] overflow-y-auto h-full focus:outline-none"
       >
         <button onClick={handleCloseModal}>X</button>
 
-        <div className="py-[20px] px-[50px] space-y-3 w-full">
+        <div className="py-[20px] lg:px-[50px]  px-[10px] space-y-3 w-full">
+
           <div className="mb-5">
             <h1 className=" text-[42px] font-semibold leading-[48px]">
               Update Workshop
@@ -370,8 +373,8 @@ function ModalUpadateWorkshop({ workshopId }) {
               Format: {format(selectedDate, "EEEE, dd MMMM yyyy")}
             </p>
           </div>
-          <div className="w-full flex items-center space-x-2">
-            <div className="flex space-x-2 items-center">
+          <div className="w-full flex lg:flex-row flex-col lg:items-center lg:space-x-2 space-y-2">
+            <div className="flex lg:space-x-2 space-y-2 lg:space-y-0 lg:flex-row flex-col lg:items-center">
               <label htmlFor="startTime">Mulai:</label>
               <input
                 type="time"
@@ -410,7 +413,7 @@ function ModalUpadateWorkshop({ workshopId }) {
           <div className="flex">
             <label
               htmlFor="image"
-              className="h-[38px]  text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
+              className="h-[38px]  text-sm flex lg:w-auto w-full justify-center items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
             >
               Choose Poster
             </label>

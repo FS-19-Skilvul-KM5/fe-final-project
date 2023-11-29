@@ -66,7 +66,7 @@ export default function CreateEducation() {
           {message}
         </div>
       )}
-      <main className="py-[20px] px-[50px] space-y-3 lg:w-[50%] w-[100%]">
+      <main className="py-[20px] lg:px-[50px] px-[20px] space-y-3 lg:w-[50%] w-[100%]">
         <div className="mb-5">
           <h1 className=" text-[42px] font-semibold leading-[48px]">
             Create new education

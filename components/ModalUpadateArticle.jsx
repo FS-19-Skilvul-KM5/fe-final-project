@@ -83,15 +83,16 @@ function ModalUpadateArticle({ articleId }) {
 
   const customModalStyles = {
     content: {
-      width: "60%",
       margin: "auto",
       border: "1px solid #ccc",
       borderRadius: "8px",
       padding: "20px",
+      backgroundColor: 'white'
     },
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
       zIndex: 20,
+      padding: '20px'
     },
   };
 
@@ -111,14 +112,22 @@ function ModalUpadateArticle({ articleId }) {
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}
         contentLabel="Education Modal"
-        style={customModalStyles} // Apply custom styles here
+        style={customModalStyles}
+        className="w-full lg:w-[60%] overflow-y-auto h-full focus:outline-none"
+
       >
+        <button className="mb-3" onClick={handleCloseModal}><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#080808" viewBox="0 0 256 256"><path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path></svg></button>
+        <div className="mb-5">
+          <h1 className=" text-[42px] font-semibold leading-[48px]">
+            Update Article
+          </h1>
+        </div>
         <form className="w-full">
           <div className="flex mb-5 flex-col space-y-5">
             <div className="flex">
               <label
                 htmlFor="image"
-                className="h-[38px]  text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
+                className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
               >
                 Image Title
               </label>
@@ -174,7 +183,6 @@ function ModalUpadateArticle({ articleId }) {
             </button>
           )}
         </form>
-        <button onClick={handleCloseModal}>Close</button>
       </Modal>
       <button onClick={() => handleOpenModal()}>
         <svg

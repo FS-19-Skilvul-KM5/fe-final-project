@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import { useParams } from "react-router-dom";
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
 export default function Article() {
   document?.documentElement.setAttribute("data-color-mode", "light");
@@ -11,6 +12,7 @@ export default function Article() {
   const [article, setArticle] = useState(null);
   const [markdown, setMarkdown] = useState("### Loading...");
   const [articles, setArticles] = useState([]);
+  const [relativeTime, setRelativeTime] = useState("");
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -49,6 +51,19 @@ export default function Article() {
     fetchLatestArticles();
     fetchArticle();
   }, [id]);
+
+  useEffect(() => {
+    try {
+      const parsedDate = parseISO(article?.publication_date);
+
+      const relativeTimeString = formatDistanceToNow(parsedDate, { addSuffix: true });
+
+      setRelativeTime(relativeTimeString);
+    } catch (error) {
+      console.error("Error parsing date:", error.message);
+    }
+  }, [article?.publication_date]);
+
   return (
     <>
       <Navbar />
@@ -59,14 +74,13 @@ export default function Article() {
           className="w-full object-cover h-[300px] rounded-[10px]"
         />
 
-        <h1 className=" text-[50px] leading-[58px] font-semibold text-[#186F65]">
+        <h1 className=" text-[48px] leading-[52px] font-semibold text-[#186F65]">
           {article?.title}
         </h1>
         <div className="flex space-x-2 items-center">
           <span className="text-[22px] text-sm text-black/50">
-            {article?.publication_date}
+            {relativeTime}
           </span>
-          <h1 className=" font-semibold ">Username</h1>
         </div>
         <MarkdownPreview source={markdown} />
       </main>

@@ -41,7 +41,7 @@ export default function Signin() {
         navigate("/profile");
       }
     } catch (error) {
-      setMessage("Pilih file gambar yang valid.");
+      setMessage("Internal server error");
 
       setTimeout(() => {
         setMessage("");

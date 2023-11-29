@@ -97,13 +97,23 @@ export default function CreateArticle() {
           {message}
         </div>
       )}
-      <main className="py-[20px] px-[50px]">
+      <main className="py-[20px] lg:px-[50px] px-[20px]">
+        <div className="mb-5">
+          <h1 className=" text-[42px] font-semibold leading-[48px]">
+            Create new article
+          </h1>
+          <p className="text-sm text-black/60">
+            Selamat datang di halaman pembuatan data pendidikan! Di sini, Anda
+            dapat dengan mudah menambahkan informasi tentang latar belakang
+            pendidikan Anda atau pengguna lainnya.
+          </p>
+        </div>
         <form className="w-full">
           <div className="flex mb-5 flex-col space-y-5">
             <div className="flex">
               <label
                 htmlFor="image"
-                className="h-[38px]  text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
+                className="h-[38px] w-full lg:w-auto justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
               >
                 Image Title
               </label>

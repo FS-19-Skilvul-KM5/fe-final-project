@@ -1,8 +1,29 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { useEffect, useState } from "react";
+import Card from "../components/Card";
 
 function App() {
+  const [articles, setArticles] = useState([]);
 
+  useEffect(() => {
+    const fetchLatestArticles = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/articles/recommendation`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setArticles(data);
+      } catch (error) {
+        console.error("Error fetching latest articles:", error);
+      }
+    };
+
+    fetchLatestArticles();
+  }, []);
   return (
     <>
       <Navbar />
@@ -165,13 +186,25 @@ function App() {
             Rekomendasi artikel untuk mu
           </h1>
           <a
-            href="/"
+            href="/articles"
             className="font-semibold border rounded-full h-[42px] px-3 text-sm flex  hover:underline items-center text-[#186F65] border-[#186F65]"
           >
             Lihat artikel lain
           </a>
         </div>
-
+        <div className="grid lg:grid-cols-4 grid-cols-2 gap-4 mt-5">
+          {articles.map((item, index) => {
+            return (
+              <Card
+                type="article"
+                title={item.title}
+                imageUrl={item.image.url}
+                link={`/articles/${item._id}`}
+                key={index}
+              />
+            );
+          })}
+        </div>
       </main>
       <Footer />
     </>

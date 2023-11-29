@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="py-5 mt-10 ">
       <div className="grid lg:grid-cols-4 grid-cols-1">
-        <div className="flex flex-col px-[50px] col-span-1">
+        <div className="flex flex-col lg:px-[50px] px-[20px] col-span-1">
           <div className="flex">
             <a href="/">
               <img src="/logo.png" alt="" width="40" height="40" />
