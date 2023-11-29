@@ -51,6 +51,7 @@ fe-final-project/
 |   |-- Card.jsx
 |   |-- Footer.jsx
 |   |-- MarkdownEditor.jsx
+|   |-- ModalUpadateEducation.jsx
 |   |-- ModalUpdateArticle.jsx
 |   |-- Navbar.jsx
 |   |-- Tab.jsx
@@ -61,12 +62,17 @@ fe-final-project/
 |   |-- App.jsx
 |   |-- Article.jsx
 |   |-- CreateArticle.jsx
+|   |-- CreateEducation.jsx
+|   |-- CreateWorkshop.jsx
 |   |-- index.css
 |   |-- main.jsx
 |   |-- MapMini.jsx
 |   |-- Profile.jsx
+|   |-- SerialEducation.jsx
 |   |-- Signin.jsx
 |   |-- Signup.jsx
+|   |-- Workshop.jsx
+|   |-- Workshops.jsx
 |-- public/
 |-- index.html
 |-- tailwind.config.js
