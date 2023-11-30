@@ -47,9 +47,8 @@ export default function Workshop() {
   const uploadArticle = async () => {
     try {
       setLoading(true);
-      const apiUrl = `${
-        import.meta.env.VITE_REACT_APP_API_URL
-      }/workshop/${id}/peserta`;
+      const apiUrl = `${import.meta.env.VITE_REACT_APP_API_URL
+        }/workshop/${id}/peserta`;
 
       const token = Cookies.get("token");
 

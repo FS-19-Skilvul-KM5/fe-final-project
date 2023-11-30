@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import MarkdownEditor from "./MarkdownEditor";
 import PropTypes from "prop-types";
@@ -6,7 +6,6 @@ import Cookies from "js-cookie";
 
 function ModalUpadateArticle({ articleId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [markdown, setMarkdown] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,9 +27,29 @@ function ModalUpadateArticle({ articleId }) {
     setMarkdown(newMarkdown);
   };
 
-  const handleRemoveImage = () => {
-    setImage(null);
-  };
+  useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/articles/${articleId}`
+        );
+        const data = await response.json();
+        setTitle(data?.title);
+        if (data && data.content) {
+          const resMarkdown = await fetch(data.content.url);
+          const markdownContent = await resMarkdown.text();
+
+          setMarkdown(markdownContent);
+        } else {
+          console.error("Invalid data or content not available.");
+        }
+      } catch (error) {
+        console.error("Error fetching article:", error);
+      }
+    };
+
+    fetchArticle();
+  }, [articleId]);
 
   const uploadArticle = async () => {
     try {
@@ -38,11 +57,13 @@ function ModalUpadateArticle({ articleId }) {
       const apiUrl = `${import.meta.env.VITE_REACT_APP_API_URL}`;
 
       const formData = new FormData();
-      formData.append("image", image);
       formData.append("title", title);
-      formData.append("markdown", markdown);
+      formData.append(
+        "files",
+        new Blob([markdown], { type: "text/markdown" }),
+        "article.md"
+      );
       const token = Cookies.get("token");
-
       const response = await fetch(`${apiUrl}/articles/${articleId}`, {
         method: "PUT",
         body: formData,
@@ -55,7 +76,6 @@ function ModalUpadateArticle({ articleId }) {
         throw new Error("Failed to update article");
       }
 
-      setImage(null);
       setTitle("");
       setMarkdown("");
       const responseData = await response.json();
@@ -96,11 +116,6 @@ function ModalUpadateArticle({ articleId }) {
     },
   };
 
-  const handleImageChange = (e) => {
-    const selectedImage = e.target.files[0];
-    setImage(selectedImage);
-  };
-
   return (
     <>
       {message && (
@@ -133,41 +148,10 @@ function ModalUpadateArticle({ articleId }) {
         </div>
         <form className="w-full">
           <div className="flex mb-5 flex-col space-y-5">
-            <div className="flex">
-              <label
-                htmlFor="image"
-                className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
-              >
-                Image Title
-              </label>
-              <input
-                accept="image/*"
-                type="file"
-                name=""
-                className="hidden"
-                id="image"
-                onChange={handleImageChange}
-              />
-            </div>
-            {image && (
-              <div className="relative">
-                <img
-                  src={URL.createObjectURL(image)}
-                  alt=""
-                  className="h-[200px] object-cover lg:w-[300px] w-full rounded-lg"
-                />
-                <button
-                  onClick={handleRemoveImage}
-                  className="absolute w-[32px] h-[32px] rounded-full bg-white/50 top-2 left-2"
-                >
-                  X
-                </button>
-              </div>
-            )}
-
             <input
               className="focus:outline-none h-[38px] p-2 border border-black/20 rounded-lg"
               type="text"
+              value={title}
               onChange={handleTitleChange}
               placeholder="Enter your Title"
             />

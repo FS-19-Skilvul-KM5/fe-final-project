@@ -15,14 +15,14 @@ const MarkdownEditor = (props) => {
       </p>
       <div className="grid lg:grid-cols-2  grid-cols-1 gap-3 mb-5">
         <textarea
-          className=" overflow-y-auto focus:outline-none border border-black/20 p-5 resize-none rounded-lg"
+          className=" overflow-y-auto focus:outline-none border border-black/20 p-2 resize-none rounded-lg"
           value={props.markdown}
           placeholder="Markdown editor"
           onChange={handleEditorChange}
           style={{ width: "100%", height: "300px" }}
         />
         <MarkdownPreview
-          className=" overflow-y-auto p-3 rounded-lg  border border-black/20"
+          className=" overflow-y-auto p-2 rounded-lg  border border-black/20"
           style={{ width: "100%", height: "300px" }}
           source={props.markdown}
         />

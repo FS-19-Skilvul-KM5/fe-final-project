@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import PropTypes from "prop-types";
 import Cookies from "js-cookie";
@@ -26,6 +26,23 @@ function ModalUpadateEducation({ educationId }) {
       }, 2000);
     }
   };
+
+  useEffect(() => {
+    const fetchWorkshop = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/educations/${educationId}`
+        );
+        const data = await response.json();
+        setTitle(data?.title);
+        setUrl(data?.video);
+      } catch (error) {
+        console.error("Error fetching workshop:", error);
+      }
+    };
+
+    fetchWorkshop();
+  }, [educationId]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
