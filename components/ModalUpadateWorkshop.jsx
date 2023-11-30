@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { format, parseISO } from "date-fns";
 import PropTypes from "prop-types";
@@ -21,12 +21,44 @@ function ModalUpadateWorkshop({ workshopId }) {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [location, setLocation] = useState("");
+  const [narasumberList, setNarasumberList] = useState([]);
+  const [newNarasumber, setNewNarasumber] = useState("");
+  const [moderatorList, setModeratorList] = useState([]);
+  const [newModerator, setNewModerator] = useState("");
 
   const handleDateChange = (event) => {
     const selectedDateString = event.target.value;
     const parsedDate = parseISO(selectedDateString);
     setSelectedDate(parsedDate);
   };
+
+  useEffect(() => {
+    const fetchWorkshop = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/workshop/${workshopId}`
+        );
+        const data = await response.json();
+        setTitle(data?.title);
+        setMateriList(data?.materi);
+        setTujuan(data?.tujuan);
+        setFasilitasList(data?.fasilitas);
+        setNarasumberList(data?.narasumber);
+        setModeratorList(data?.moderator);
+        setLocation(data?.location);
+        setPrice(data?.price);
+        const parsedDate = parseISO(data?.date);
+        selectedDate(parsedDate);
+        setStartTime(data?.startTime);
+        setEndTime(data?.startTime);
+        setTimezone(data?.timeZone);
+      } catch (error) {
+        console.error("Error fetching workshop:", error);
+      }
+    };
+
+    fetchWorkshop();
+  }, [workshopId]);
 
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
@@ -102,14 +134,18 @@ function ModalUpadateWorkshop({ workshopId }) {
       formData.append("title", title);
       formData.append("files", image);
       formData.append("tujuan", tujuan);
-
+      narasumberList.forEach((narasumber, index) => {
+        formData.append(`narasumber[${index}]`, narasumber);
+      });
       fasilitasList.forEach((fasilitas, index) => {
         formData.append(`fasilitas[${index}]`, fasilitas);
       });
       materiList.forEach((materi, index) => {
         formData.append(`materi[${index}]`, materi);
       });
-
+      moderatorList.forEach((moderator, index) => {
+        formData.append(`moderator[${index}]`, moderator);
+      });
       formData.append("price", price);
       formData.append("location", location);
       formData.append("date", selectedDate.toISOString());
@@ -133,9 +169,11 @@ function ModalUpadateWorkshop({ workshopId }) {
         const resetForm = () => {
           setImage(null);
           setTitle("");
+          setNarasumberList([]);
           setMateriList([]);
           setTujuan("");
           setFasilitasList([]);
+          setModeratorList([]);
           setPrice("");
           setLocation("");
           setStartTime("08:00");
@@ -184,6 +222,70 @@ function ModalUpadateWorkshop({ workshopId }) {
       zIndex: 20,
       padding: "20px",
     },
+  };
+
+  const handleNarasumberAdd = () => {
+    if (newNarasumber.trim() === "") {
+      setMessage("Username cannot be empty");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return;
+    }
+
+    if (narasumberList.includes(newNarasumber)) {
+      setMessage("Username is already in the list");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return;
+    }
+
+    setNarasumberList((prevList) => [...prevList, newNarasumber]);
+    setNewNarasumber("");
+
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  };
+
+  const handleNarasumberRemove = (index) => {
+    setNarasumberList((prevList) => {
+      const newList = [...prevList];
+      newList.splice(index, 1);
+      return newList;
+    });
+  };
+
+  const handleModeratorAdd = () => {
+    if (newModerator.trim() === "") {
+      setMessage("Username cannot be empty");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return;
+    }
+
+    if (moderatorList.includes(newModerator)) {
+      setMessage("Username is already in the list");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return;
+    }
+
+    setModeratorList((prevList) => [...prevList, newModerator]);
+    setNewModerator("");
+
+    // Reset pesan setelah 20 detik
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  };
+
+  const handleModeratorRemove = (index) => {
+    const updatedModeratorList = moderatorList.filter((_, i) => i !== index);
+    setModeratorList(updatedModeratorList);
   };
 
   return (
@@ -291,7 +393,108 @@ function ModalUpadateWorkshop({ workshopId }) {
               placeholder="Enter your tujuan"
             />
           </div>
-
+          <div className="flex flex-col">
+            <label className="font-semibold text-sm" htmlFor="narasumber">
+              Narasumber
+            </label>
+            <div className="flex items-center w-full space-x-2">
+              <input
+                className="focus:outline-none h-[38px] p-2 border border-black/20 rounded-lg mt-1 flex-auto"
+                type="text"
+                id="narasumber"
+                value={newNarasumber}
+                onChange={(e) => setNewNarasumber(e.target.value)}
+                placeholder="Enter username"
+              />
+              <button
+                onClick={handleNarasumberAdd}
+                className="h-[38px] lg:w-auto justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
+              >
+                Add
+              </button>
+            </div>
+            <div className="flex space-y-2 max-h-[300px] overflow-y-auto mt-3 flex-col box-border">
+              {narasumberList.map((narasumber, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex space-x-2 p-2  border border-black/20 hover:border-black/50 w-full  justify-between items-center"
+                  >
+                    <div className="flex space-x-2 items-center">
+                      <img
+                        src="/avatar-3.png"
+                        className="object-cover rounded-full h-[42px] w-[42px]"
+                        alt=""
+                      />
+                      <h1 className="font-semibold">{narasumber}</h1>
+                    </div>
+                    <button onClick={() => handleNarasumberRemove(index)}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="28"
+                        height="28"
+                        fill="#110e0e"
+                        viewBox="0 0 256 256"
+                      >
+                        <path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+                      </svg>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <label className="font-semibold text-sm" htmlFor="moderator">
+              Moderator
+            </label>
+            <div className="flex items-center w-full space-x-2">
+              <input
+                className="focus:outline-none h-[38px] p-2 border border-black/20 rounded-lg mt-1 flex-auto"
+                type="text"
+                id="moderator"
+                placeholder="Add username"
+                value={newModerator}
+                onChange={(e) => setNewModerator(e.target.value)}
+              />
+              <button
+                onClick={handleModeratorAdd}
+                className="h-[38px] lg:w-auto justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
+              >
+                Add
+              </button>
+            </div>
+            <div className="flex space-y-2 max-h-[300px] overflow-y-auto mt-3 flex-col box-border">
+              {moderatorList.map((moderator, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex space-x-2 p-2  border border-black/20 hover:border-black/50 w-full  justify-between items-center mt-2"
+                  >
+                    <div className="flex space-x-2 items-center">
+                      <img
+                        src="/avatar-3.png"
+                        className="object-cover rounded-full h-[42px] w-[42px]"
+                        alt=""
+                      />
+                      <h1 className="font-semibold">{moderator}</h1>
+                    </div>
+                    <button onClick={() => handleModeratorRemove(index)}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="28"
+                        height="28"
+                        fill="#110e0e"
+                        viewBox="0 0 256 256"
+                      >
+                        <path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+                      </svg>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           <div className="flex flex-col">
             <label className="font-semibold text-sm" htmlFor="fasilitas">
               Fasilitas

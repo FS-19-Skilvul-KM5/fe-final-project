@@ -312,7 +312,7 @@ export default function Profile() {
                     <td className="py-2 px-4  border-r">{user?.role}</td>
                     <td className="py-2 px-4  flex space-x-2 items-center">
                       {currentUser?.role === "admin" ||
-                      currentUser?.role === "root" ? (
+                        currentUser?.role === "root" ? (
                         <>
                           <button onClick={() => handleRemoveUser(user._id)}>
                             <svg
@@ -376,7 +376,10 @@ export default function Profile() {
           <thead className="bg-gray-100 border-b">
             <tr>
               <th className="py-2 px-4 border-r text-left">ID</th>
-              <th className="py-2 px-4 border-r text-left">Title</th>
+              <th className="py-2 px-4 border-r text-left">Image</th>
+              <th className="py-2 px-4 border-r text-left lg:block hidden">
+                Title
+              </th>
               <th className="py-2 px-4 border-r text-left">Tujuan</th>
 
               <th className="py-2 px-4 text-left">Actions</th>
@@ -386,16 +389,29 @@ export default function Profile() {
             {Array.isArray(currentUser?.workshop) &&
               currentUser?.workshop.map((workshop, index) => {
                 return (
-                  <tr className="border-b" key={index}>
+                  <tr className="border-b " key={index}>
                     <td className="py-2 px-4 border-b border-r w-5 overflow-hidden cursor-pointer">
                       <div className="text-ellipsis overflow-hidden w-[50px]">
                         {workshop._id}
                       </div>
                     </td>
 
-                    <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px]">
-                      <div className="line-clamp-2 text-ellipsis overflow-hidden w-[30px] md:w-auto lg:w-auto">
-                        {workshop.title}
+                    <td className="py-2 px-4  lg:block hidden">
+                      <img
+                        src={workshop.poster.url}
+                        alt=""
+                        className="h-[48px] w-[48px] rounded-lg object-cover"
+                      />
+                    </td>
+
+                    <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px] ">
+                      <div className="flex">
+                        <a
+                          href={`/workshop/${workshop._id}`}
+                          className="line-clamp-2 text-ellipsis overflow-hidden w-[30px] md:w-auto lg:w-auto hover:underline"
+                        >
+                          {workshop.title}
+                        </a>
                       </div>
                     </td>
 
@@ -403,7 +419,7 @@ export default function Profile() {
                       <div className="line-clamp-2 ">{workshop.tujuan}</div>
                     </td>
 
-                    <td className="py-2 px-4  flex space-x-2 items-center">
+                    <td className="py-2 px-4 space-x-2 items-center  ">
                       <button
                         onClick={() => handleRemoveWorkshop(workshop._id)}
                       >
@@ -433,7 +449,10 @@ export default function Profile() {
           <thead className="bg-gray-100 border-b">
             <tr>
               <th className="py-2 px-4 border-r text-left">ID</th>
-              <th className="py-2 px-4 border-r text-left">Title</th>
+              <th className="py-2 px-4 border-r text-left lg:block hidden">
+                Image
+              </th>
+              <th className="py-2 px-4 border-r text-left ">Title</th>
               <th className="py-2 px-4 border-r text-left">Url</th>
 
               <th className="py-2 px-4 text-left">Actions</th>
@@ -449,17 +468,26 @@ export default function Profile() {
                         {education._id}
                       </div>
                     </td>
+                    <td className="py-2 px-4  lg:block hidden">
+                      <img
+                        src={education.image.url}
+                        alt=""
+                        className="h-[48px] w-[48px] rounded-lg object-cover"
+                      />
+                    </td>
                     <td className="py-2 px-4  border-r  overflow-hidden  lg:w-auto w-[200px]">
                       <div className="line-clamp-2 text-ellipsis overflow-hidden md:w-auto w-[30px] lg:w-auto">
                         {education.title}
                       </div>
                     </td>
+
                     <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px]">
-                      <div className="line-clamp-2 ">{education.video}</div>
+                      <div className="line-clamp-2 w-[30px] text-ellipsis">
+                        {education.video}
+                      </div>
                     </td>
 
-                    <td className="py-3 px-4 flex space-x-2 items-center">
-                      <ModalUpadateEducation educationId={education._id} />
+                    <td className="py-3 px-4  space-x-2 items-center">
                       <button
                         onClick={() => handleRemoveEducation(education._id)}
                       >
@@ -473,6 +501,8 @@ export default function Profile() {
                           <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
                         </svg>
                       </button>
+                      <ModalUpadateEducation educationId={education._id} />
+
                     </td>
                   </tr>
                 );
@@ -488,7 +518,9 @@ export default function Profile() {
           <thead className="bg-gray-100 border-b">
             <tr>
               <th className="py-2 px-4 border-r text-left">ID</th>
-              <th className="py-2 px-4 border-r text-left">Image</th>
+              <th className="py-2 px-4 border-r text-left lg:block hidden">
+                Image
+              </th>
               <th className="py-2 px-4 border-r text-left">Title</th>
               <th className="py-2 px-4 text-left">Actions</th>
             </tr>
@@ -503,20 +535,25 @@ export default function Profile() {
                         {article._id}
                       </div>
                     </td>
-                    <td className="py-2 px-4 ">
+                    <td className="py-2 px-4 lg:block hidden">
                       <img
                         src={article.image.url}
                         alt=""
                         className="h-[48px] w-[48px] rounded-lg object-cover"
                       />
                     </td>
-                    <td className="py-2 px-4 border-b border-r  overflow-hidden lg:w-auto w-[200px]">
-                      <div className="line-clamp-2 text-ellipsis overflow-hidden md:w-auto w-[50px] lg:w-auto">
-                        {article.title}
+                    <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px] ">
+                      <div className="flex">
+                        <a
+                          href={`/articles/${article._id}`}
+                          className="line-clamp-2 text-ellipsis overflow-hidden w-[30px] md:w-auto lg:w-auto hover:underline"
+                        >
+                          {article.title}
+                        </a>
                       </div>
                     </td>
 
-                    <td className="py-3 px-4 flex space-x-2 items-center">
+                    <td className="py-3 px-4  space-x-2 items-center">
                       <button onClick={() => handleRemoveArticle(article._id)}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -548,9 +585,9 @@ export default function Profile() {
         </div>
       )}
       <div className="container mx-auto mt-8 lg:px-[20px] px-[10px] min-h-screen">
-        <div className="flex flex-col lg:flex-row lg:justify-between mb-3">
+        <div className="flex flex-col lg:flex-row lg:justify-between mb-3 w-full lg:items-center">
           <h2 className="text-3xl font-semibold mb-4">User Dashboard</h2>
-          <div className="flex space-x-2 flex-wrap gap-2">
+          <div className="flex space-x-2 flex-row w-full overflow-x-auto overflow-y-hidden gap-2 lg:w-auto no-scrollbar">
             {currentUser?.role === "admin" || currentUser?.role === "root" ? (
               <>
                 <a

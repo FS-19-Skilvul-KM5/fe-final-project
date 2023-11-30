@@ -10,10 +10,11 @@ const Tabs = ({ tabs, role }) => {
         {tabs.map((tab, index) => (
           <button
             key={index}
-            className={`${index === activeTab
-                ? "border-b-2 border-blue-500"
-                : "text-gray-500 hover:text-gray-700"
-              } flex items-center px-4 py-2 focus:outline-none`}
+            className={`border-b-2 ${
+              index === activeTab
+                ? "border-b-2 border-black font-semibold"
+                : "text-gray-500 hover:text-gray-700 border-b-transparent "
+            } flex items-center px-4 py-2 focus:outline-none `}
             onClick={() => setActiveTab(index)}
           >
             {tab.label}
