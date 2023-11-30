@@ -37,7 +37,7 @@ export default function Navbar() {
           </a>
         </div>
         <div
-          className={`flex absolute lg:-translate-x-1/2 lg:flex-row flex-col lg:w-auto left-0 right-0 mx-[10px]  z-50 lg:left-1/2 lg:space-x-5 lg:visible top-[100%] lg:top-1/2 lg:-translate-y-1/2 transition-all mt-1 lg:mt-0 ${
+          className={`flex absolute  lg:flex-row flex-col lg:w-auto left-0 right-0 mx-[10px]  z-50 lg:left-1/2 lg:space-x-5 lg:visible top-[100%] lg:-translate-x-1/2 lg:top-1/2 lg:-translate-y-1/2 transition-all mt-1 lg:mt-0 ${
             menuaOpen ? "visible bg-white  rounded-xl " : " invisible"
           }`}
         >

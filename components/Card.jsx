@@ -145,11 +145,11 @@ function Card({ type, price, imageUrl, title, content, date, link, IdVideo }) {
 
 Card.propTypes = {
   type: PropTypes.string.isRequired,
-  articleId: PropTypes.number.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
+  articleId: PropTypes.number,
+  imageUrl: PropTypes.string,
+  title: PropTypes.string,
+  content: PropTypes.string,
+  date: PropTypes.string,
   link: PropTypes.string,
   price: PropTypes.string,
   IdVideo: PropTypes.string,

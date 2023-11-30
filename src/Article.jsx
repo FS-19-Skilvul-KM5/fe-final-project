@@ -36,7 +36,9 @@ export default function Article() {
     const fetchLatestArticles = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/articles/recommendation`
+          `${
+            import.meta.env.VITE_REACT_APP_API_URL
+          }/articles/${id}/recommendations`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

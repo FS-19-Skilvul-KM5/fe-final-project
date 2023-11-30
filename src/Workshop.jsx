@@ -11,6 +11,10 @@ export default function Workshop() {
   const [freeWorkshops, setFreeWorkshops] = useState([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const dateObject = workshop?.date ? new Date(workshop.date) : null;
+  const formattedDate = dateObject
+    ? dateObject.toISOString().split("T")[0]
+    : "";
 
   useEffect(() => {
     const fetchWorkshop = async () => {
@@ -47,8 +51,9 @@ export default function Workshop() {
   const uploadArticle = async () => {
     try {
       setLoading(true);
-      const apiUrl = `${import.meta.env.VITE_REACT_APP_API_URL
-        }/workshop/${id}/peserta`;
+      const apiUrl = `${
+        import.meta.env.VITE_REACT_APP_API_URL
+      }/workshop/${id}/peserta`;
 
       const token = Cookies.get("token");
 
@@ -102,7 +107,6 @@ export default function Workshop() {
           <span className="text-[22px] text-sm text-black/50">
             {workshop?.selectedDate}
           </span>
-          <h1 className=" font-semibold ">Username</h1>
         </div>
         <div className="flex flex-col space-y-2">
           <h1 className=" font-semibold text-[24px]">Materi Workshop</h1>
@@ -192,7 +196,7 @@ export default function Workshop() {
               >
                 <path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path>
               </svg>
-              {workshop?.date} / {workshop?.startTime} - {workshop?.endTime}{" "}
+              {formattedDate} / {workshop?.startTime} - {workshop?.endTime}{" "}
               {workshop?.timezone}
             </span>
             <span className="flex items-center text-sm font-semibold">
@@ -213,7 +217,7 @@ export default function Workshop() {
         <div className="w-full flex flex-col items-center space-y-3">
           <div className="flex w-full justify-center bg-white">
             <img
-              className="lg:w-[522px] w-full h-[661px] object-cover"
+              className="lg:w-[600px] w-full max-h-[700px] h-auto object-cover"
               src={workshop?.poster.url}
               alt=""
             />
