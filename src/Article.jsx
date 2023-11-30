@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import { useParams } from "react-router-dom";
-import { formatDistanceToNow, parseISO } from 'date-fns';
+import { formatDistanceToNow, parseISO } from "date-fns";
 
 export default function Article() {
   document?.documentElement.setAttribute("data-color-mode", "light");
@@ -56,7 +56,9 @@ export default function Article() {
     try {
       const parsedDate = parseISO(article?.publication_date);
 
-      const relativeTimeString = formatDistanceToNow(parsedDate, { addSuffix: true });
+      const relativeTimeString = formatDistanceToNow(parsedDate, {
+        addSuffix: true,
+      });
 
       setRelativeTime(relativeTimeString);
     } catch (error) {
@@ -106,6 +108,7 @@ export default function Article() {
                 imageUrl={item.image.url}
                 link={`/articles/${item._id}`}
                 key={index}
+                date={item.createdAt}
               />
             );
           })}

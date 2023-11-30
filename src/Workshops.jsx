@@ -12,7 +12,8 @@ export default function Workshops() {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_API_URL
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
         }/workshop/search?q=${searchTerm}`
       );
       if (!response.ok) {
@@ -54,7 +55,7 @@ export default function Workshops() {
   return (
     <>
       <Navbar />
-      <main className="py-[80px] px-[50px] flex lg:flex-row flex-col  lg:space-x-5 justify-center items-center ">
+      <main className="py-[20px] lg:py-[80px] lg:px-[50px] px-[20px] flex lg:flex-row flex-col  lg:space-x-5 justify-center items-center ">
         <div className="flex flex-col lg:w-[500px] w-full">
           <h1 className="text-[55px] font-semibold leading-[59px]">
             Worksop Overview Challenge
@@ -111,6 +112,7 @@ export default function Workshops() {
                   type="workshop"
                   link={`/workshop/${item?._id}`}
                   key={index}
+                  date={item.createdAt}
                 />
               );
             })}
@@ -134,6 +136,7 @@ export default function Workshops() {
                 type="workshop"
                 link={`/workshop/${item.workshop._id}`}
                 key={index}
+                date={item.workshop.createdAt}
               />
             );
           })}
@@ -155,6 +158,7 @@ export default function Workshops() {
                 type="workshop"
                 link={`/workshop/${item.workshop._id}`}
                 key={index}
+                date={item.workshop.createdAt}
               />
             );
           })}

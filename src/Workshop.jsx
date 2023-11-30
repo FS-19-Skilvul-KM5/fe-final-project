@@ -247,6 +247,7 @@ export default function Workshop() {
           {freeWorkshops?.map((item, index) => {
             return (
               <Card
+                date={item.workshop.createdAt}
                 price={item.workshop.price}
                 imageUrl={item.workshop.poster.url}
                 title={item.workshop.title}

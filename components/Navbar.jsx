@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const [menuaOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -22,6 +23,11 @@ export default function Navbar() {
 
     navigate("/signin");
   };
+
+  const isNavLinkActive = (url) => {
+    return location.pathname === url;
+  };
+
   return (
     <nav className="h-[78px] sticky top-0 bg-white z-10">
       <div className="flex items-center justify-between relative w-full lg:px-[50px] px-[20px] h-full">
@@ -31,36 +37,53 @@ export default function Navbar() {
           </a>
         </div>
         <div
-          className={`flex absolute lg:-translate-x-1/2 lg:flex-row flex-col lg:w-auto w-full lg:left-1/2 lg:space-x-5 lg:visible top-[100%] lg:top-1/2 lg:-translate-y-1/2 transition-all mt-1 lg:mt-0 ${menuaOpen ? "visible bg-white  rounded-xl " : " invisible"
-            }`}
+          className={`flex absolute lg:-translate-x-1/2 lg:flex-row flex-col lg:w-auto left-0 right-0 mx-[10px]  z-50 lg:left-1/2 lg:space-x-5 lg:visible top-[100%] lg:top-1/2 lg:-translate-y-1/2 transition-all mt-1 lg:mt-0 ${
+            menuaOpen ? "visible bg-white  rounded-xl " : " invisible"
+          }`}
         >
           <a
             href="/"
-            className="text-black/50 font-semibold hover:text-black lg:p-0 p-3 "
+            className={` font-semibold hover:text-black lg:p-0 p-5 ${
+              isNavLinkActive("/") ? "text-black opacity-100" : "text-black/50"
+            }`}
           >
             Beranda
           </a>
           <a
             href="/articles"
-            className="text-black/50 font-semibold hover:text-black lg:p-0 p-3 "
+            className={` font-semibold hover:text-black lg:p-0 p-5 ${
+              isNavLinkActive("/articles")
+                ? "text-black opacity-100"
+                : "text-black/50"
+            }`}
           >
             Articles
           </a>
           <a
             href="/educations"
-            className="text-black/50 font-semibold hover:text-black lg:p-0 p-3 "
+            className={` font-semibold hover:text-black lg:p-0 p-5 ${
+              isNavLinkActive("/educations")
+                ? "text-black opacity-100"
+                : "text-black/50"
+            }`}
           >
             Belajar
           </a>
           <a
             href="/workshop"
-            className="text-black/50 font-semibold hover:text-black lg:p-0 p-3 "
+            className={`font-semibold hover:text-black lg:p-0 p-5 ${
+              isNavLinkActive("/workshop")
+                ? "text-black opacity-100"
+                : "text-black/50"
+            }`}
           >
             Workshop
           </a>
           <a
             href="/mapMini"
-            className="text-black/50 font-semibold hover:text-black lg:p-0 p-3 "
+            className={` font-semibold hover:text-black lg:p-0 p-5 ${
+              isNavLinkActive("/mapMini") ? "text-black/100" : "text-black/50"
+            }`}
           >
             Peta Minim Sampah
           </a>

@@ -11,6 +11,14 @@ export default function Signup() {
   const [message, setMessage] = useState("");
 
   const handleSignUp = async () => {
+    if (password.length < 6) {
+      setMessage("Panjang password harus 6");
+
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return;
+    }
     try {
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_API_URL}/auth/signup`,
@@ -33,7 +41,7 @@ export default function Signup() {
 
         setTimeout(() => {
           setMessage("");
-        }, 20000);
+        }, 2000);
         return;
       }
 
@@ -46,8 +54,28 @@ export default function Signup() {
 
       setTimeout(() => {
         setMessage("");
-      }, 20000);
+      }, 2000);
     }
+  };
+  const isPasswordValid = () => {
+    if (password.length > 0) {
+      return password.length < 6;
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (password.length < 6) {
+      setMessage("Panjang password harus 6");
+
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return;
+    }
+
+    handleSignUp();
   };
 
   return (
@@ -61,7 +89,7 @@ export default function Signup() {
       <main className="flex justify-center py-[40px] px-5">
         <div className="flex flex-col lg:w-[400px] w-full">
           <h1 className="font-semibold text-center text-[42px]">Sign up</h1>
-          <form className=" flex flex-col mt-5">
+          <form className=" flex flex-col mt-5" onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-3">
               <label className="font-semibold text-sm" htmlFor="email">
                 Email
@@ -89,17 +117,23 @@ export default function Signup() {
                 Password
               </label>
               <input
-                className="focus:outline-none h-[38px] p-2 border border-black/20 rounded-lg"
+                className={`focus:outline-none h-[38px] p-2 border ${
+                  isPasswordValid() ? "border-red-500" : "border-black/20"
+                } rounded-lg`}
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 id="password"
                 placeholder="Enter your password"
               />
+              {isPasswordValid() ? (
+                <p className="text-red-500 text-sm">
+                  Password must be at least 6 characters
+                </p>
+              ) : null}
             </div>
             <button
-              type="button"
-              onClick={handleSignUp}
+              type="submit"
               className="h-[38px] text-sm  bg-[#186F65] text-white px-[20px] font-bold rounded-full mt-[20px]"
             >
               Register

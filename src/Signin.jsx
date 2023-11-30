@@ -49,6 +49,11 @@ export default function Signin() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSignIn();
+  };
+
   return (
     <div>
       <Navbar />
@@ -60,7 +65,7 @@ export default function Signin() {
       <main className="flex justify-center py-[40px] px-5">
         <div className="flex flex-col lg:w-[400px] w-full">
           <h1 className="font-semibold text-center text-[42px]">Sign in</h1>
-          <form className=" flex flex-col mt-5">
+          <form className=" flex flex-col mt-5" onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-3">
               <label className="font-semibold text-sm" htmlFor="email">
                 Email
@@ -88,8 +93,7 @@ export default function Signin() {
               />
             </div>
             <button
-              type="button"
-              onClick={handleSignIn}
+              type="submit"
               className="h-[38px] text-sm  bg-[#186F65] text-white px-[20px] font-bold rounded-full mt-[20px]"
             >
               Log in

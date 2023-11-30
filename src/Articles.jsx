@@ -11,7 +11,8 @@ export default function Articles() {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_API_URL
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
         }/articles/search?q=${searchTerm}`
       );
       if (!response.ok) {
@@ -50,7 +51,7 @@ export default function Articles() {
   return (
     <>
       <Navbar />
-      <main className="py-[80px] px-[50px] flex lg:flex-row flex-col  lg:space-x-5 justify-center items-center ">
+      <main className="py-[20px] lg:py-[80px] lg:px-[50px] px-[20px] flex lg:flex-row flex-col  lg:space-x-5 justify-center items-center ">
         <div className="flex flex-col lg:w-[500px] w-full">
           <h1 className="text-[55px] font-semibold leading-[59px]">
             Artikel Overview Challenge
@@ -106,6 +107,7 @@ export default function Articles() {
                   imageUrl={item.image.url}
                   link={`/articles/${item._id}`}
                   key={index}
+                  date={item.createdAt}
                 />
               );
             })}
@@ -127,6 +129,7 @@ export default function Articles() {
                 imageUrl={item.image.url}
                 link={`/articles/${item._id}`}
                 key={index}
+                date={item.createdAt}
               />
             );
           })}

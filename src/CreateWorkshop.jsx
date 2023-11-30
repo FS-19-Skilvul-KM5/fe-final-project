@@ -237,7 +237,7 @@ export default function CreateWorkshop() {
   const handlePriceChange = (e) => {
     const inputPrice = e.target.value;
 
-    if (parseFloat(inputPrice) >= 0 || inputPrice === '') {
+    if (parseFloat(inputPrice) >= 0 || inputPrice === "") {
       setPrice(inputPrice);
     }
   };
@@ -525,7 +525,7 @@ export default function CreateWorkshop() {
             Format: {format(selectedDate, "EEEE, dd MMMM yyyy")}
           </p>
         </div>
-        <div className="w-full flex lg:flex-row flex-col lg:items-center lg:space-x-2 space-y-2" >
+        <div className="w-full flex lg:flex-row flex-col lg:items-center lg:space-x-2 space-y-2">
           <div className="flex lg:space-x-2 space-y-2 lg:space-y-0 lg:flex-row flex-col lg:items-center">
             <label htmlFor="startTime">Mulai:</label>
             <input
@@ -561,7 +561,7 @@ export default function CreateWorkshop() {
           <p className="mt-1 text-sm">
             Waktu: {startTime} - {endTime} {timezone}
           </p>
-        </div >
+        </div>
         <div className="flex">
           <label
             htmlFor="image"
@@ -578,48 +578,44 @@ export default function CreateWorkshop() {
             onChange={handleImageChange}
           />
         </div>
-        {
-          image && (
-            <div className="relative">
-              <img
-                src={URL.createObjectURL(image)}
-                alt=""
-                className="h-[200px] object-cover lg:w-[300px] w-full rounded-lg"
-              />
-              <button
-                onClick={handleRemoveImage}
-                className="absolute w-[32px] h-[32px] rounded-full bg-white/50 top-2 left-2 flex justify-center items-center"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="28"
-                  height="28"
-                  fill="#110e0e"
-                  viewBox="0 0 256 256"
-                >
-                  <path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
-                </svg>
-              </button>
-            </div>
-          )
-        }
-        {
-          isLoading ? (
-            <div className="flex">
-              <div className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full ">
-                loading...
-              </div>
-            </div>
-          ) : (
+        {image && (
+          <div className="relative">
+            <img
+              src={URL.createObjectURL(image)}
+              alt=""
+              className="h-[200px] object-cover lg:w-[300px] w-full rounded-lg"
+            />
             <button
-              onClick={handleUploadWorkshop}
-              className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
+              onClick={handleRemoveImage}
+              className="absolute w-[32px] h-[32px] rounded-full bg-white/50 top-2 left-2 flex justify-center items-center"
             >
-              Upload
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                fill="#110e0e"
+                viewBox="0 0 256 256"
+              >
+                <path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+              </svg>
             </button>
-          )
-        }
-      </div >
+          </div>
+        )}
+        {isLoading ? (
+          <div className="flex">
+            <div className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full ">
+              loading...
+            </div>
+          </div>
+        ) : (
+          <button
+            onClick={handleUploadWorkshop}
+            className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
+          >
+            Upload
+          </button>
+        )}
+      </div>
       <Footer />
     </>
   );
