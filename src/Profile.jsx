@@ -312,7 +312,7 @@ export default function Profile() {
                     <td className="py-2 px-4  border-r">{user?.role}</td>
                     <td className="py-2 px-4  flex space-x-2 items-center">
                       {currentUser?.role === "admin" ||
-                        currentUser?.role === "root" ? (
+                      currentUser?.role === "root" ? (
                         <>
                           <button onClick={() => handleRemoveUser(user._id)}>
                             <svg
@@ -502,7 +502,6 @@ export default function Profile() {
                         </svg>
                       </button>
                       <ModalUpadateEducation educationId={education._id} />
-
                     </td>
                   </tr>
                 );

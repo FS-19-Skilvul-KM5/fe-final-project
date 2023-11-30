@@ -7,6 +7,9 @@ export default function SerialEducation() {
   const [searchTerm, setSearchTerm] = useState("");
   const [educationsSearch, setEducationsSearch] = useState([]);
   const [educations, setEducations] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 4;
 
   const handleSearch = async () => {
     try {
@@ -29,27 +32,30 @@ export default function SerialEducation() {
   };
 
   useEffect(() => {
-    const fetchLatestEducation = async () => {
+    const fetchEducations = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/educations/recommendation`
+          `${
+            import.meta.env.VITE_REACT_APP_API_URL
+          }/educations?page=${currentPage}&limit=${itemsPerPage}`
         );
-
-        if (!response.ok) {
-          throw new Error(
-            `Error fetching education data. Status: ${response.status}`
-          );
-        }
-
         const data = await response.json();
-        setEducations(data);
+        setEducations(data?.docs);
+
+        setTotalPages(data?.totalPages);
       } catch (error) {
-        console.error("Error fetching latest education:", error);
+        console.error("Error fetching educations:", error);
       }
     };
 
-    fetchLatestEducation();
-  }, []);
+    fetchEducations();
+  }, [currentPage]);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
 
   return (
     <>
@@ -124,7 +130,7 @@ export default function SerialEducation() {
           </h1>
         </div>
         <div className="grid lg:grid-cols-4 grid-cols-2 gap-4 mt-5">
-          {educations.map((item, index) => {
+          {educations?.map((item, index) => {
             return (
               <Card
                 date={item.createdAt}
@@ -138,6 +144,23 @@ export default function SerialEducation() {
           })}
         </div>
       </main>
+      <div className="space-x-2 w-full flex justify-center items-center">
+        <button
+          className="p-2 rounded-lg border border-green-600 cursor-pointer hover:bg-green-600 hover:text-white text-green-600"
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>{`Page ${currentPage} of ${totalPages}`}</span>
+        <button
+          className="p-2 rounded-lg border border-green-600 cursor-pointer hover:bg-green-600 hover:text-white text-green-600"
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
       <Footer />
     </>
   );

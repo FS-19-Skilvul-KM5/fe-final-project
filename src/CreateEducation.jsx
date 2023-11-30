@@ -8,6 +8,7 @@ export default function CreateEducation() {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleRemoveImage = () => {
     setImage(null);
@@ -31,6 +32,8 @@ export default function CreateEducation() {
     const token = Cookies.get("token");
 
     try {
+      setLoading(true);
+
       const newformData = new FormData();
       newformData.append("title", title);
       newformData.append("url", url);
@@ -62,6 +65,8 @@ export default function CreateEducation() {
         setTimeout(() => {
           setMessage("");
         }, 2000);
+        setLoading(false);
+
       }
 
       setMessage("Data telah dikirim");
@@ -170,12 +175,20 @@ export default function CreateEducation() {
               onChange={(e) => setUrl(e.target.value)}
             />
           </div>
-          <button
-            type="submit"
-            className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
-          >
-            Upload
-          </button>
+          {loading ? (
+            <div className="flex">
+              <div className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full ">
+                Uploading...
+              </div>
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
+            >
+              Upload
+            </button>
+          )}
         </form>
       </main>
       <Footer />

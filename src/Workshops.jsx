@@ -38,7 +38,6 @@ export default function Workshops() {
         );
         const data = await response.json();
 
-        // Ambil empat workshop terbaru untuk masing-masing kategori
         const latestPaidWorkshops = data.paidWorkshops.slice(0, 4);
         const latestFreeWorkshops = data.freeWorkshops.slice(0, 4);
 

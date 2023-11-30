@@ -7,6 +7,9 @@ export default function Articles() {
   const [searchTerm, setSearchTerm] = useState("");
   const [articlesSearch, setArticlesSearch] = useState([]);
   const [articles, setArticles] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 4;
 
   const handleSearch = async () => {
     try {
@@ -30,23 +33,30 @@ export default function Articles() {
   };
 
   useEffect(() => {
-    const fetchLatestArticles = async () => {
+    const fetchArticles = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/articles/recommendation`
+          `${
+            import.meta.env.VITE_REACT_APP_API_URL
+          }/articles?page=${currentPage}&limit=${itemsPerPage}`
         );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
         const data = await response.json();
-        setArticles(data);
+        setArticles(data?.docs);
+
+        setTotalPages(data?.totalPages);
       } catch (error) {
-        console.error("Error fetching latest articles:", error);
+        console.error("Error fetching articles:", error);
       }
     };
 
-    fetchLatestArticles();
-  }, []);
+    fetchArticles();
+  }, [currentPage]);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
 
   return (
     <>
@@ -121,20 +131,35 @@ export default function Articles() {
           </h1>
         </div>
         <div className="grid lg:grid-cols-4 grid-cols-2 gap-4 mt-5">
-          {articles.map((item, index) => {
-            return (
-              <Card
-                type="article"
-                title={item.title}
-                imageUrl={item.image.url}
-                link={`/articles/${item._id}`}
-                key={index}
-                date={item.createdAt}
-              />
-            );
-          })}
+          {articles?.map((item, index) => (
+            <Card
+              type="article"
+              title={item.title}
+              imageUrl={item.image.url}
+              link={`/articles/${item._id}`}
+              key={index}
+              date={item.createdAt}
+            />
+          ))}
         </div>
       </main>
+      <div className="space-x-2 w-full flex justify-center items-center">
+        <button
+          className="p-2 rounded-lg border border-green-600 cursor-pointer hover:bg-green-600 hover:text-white text-green-600"
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>{`Page ${currentPage} of ${totalPages}`}</span>
+        <button
+          className="p-2 rounded-lg border border-green-600 cursor-pointer hover:bg-green-600 hover:text-white text-green-600"
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
       <Footer />
     </>
   );
