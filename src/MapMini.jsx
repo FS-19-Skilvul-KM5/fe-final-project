@@ -26,7 +26,7 @@ export default function MapMini() {
   return (
     <>
       <Navbar />
-      <main className="py-[20px] px-[50px]">
+      <main className="py-[20px] px-[20px] lg:px-[50px]">
         <div className="flex lg:flex-row flex-col  py-5 justify-between items-center">
           <div className="flex flex-col lg:w-[500px] w-full">
             <span className="text-black/50 font-semibold">
@@ -80,7 +80,7 @@ export default function MapMini() {
           })}
         </div>
       </main>
-      <main className="py-[20px] px-[50px]">
+      <main className="py-[20px] px-[20px] lg:px-[50px]">
         <div className="flex lg:flex-row flex-col  py-5 justify-between items-center">
           <div className="flex flex-col lg:w-[500px] w-full">
             <span className="text-black/50 font-semibold">

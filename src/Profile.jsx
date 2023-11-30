@@ -1,28 +1,18 @@
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import ModalUpadateArticle from "../components/ModalUpadateArticle";
+import ModalUpadateEducation from "../components/ModalUpadateEducation";
+import ModalUpadateWorkshop from "../components/ModalUpadateWorkshop";
 import Navbar from "../components/Navbar";
 import Tabs from "../components/Tab";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
-import ModalUpadateEducation from "../components/ModalUpadateEducation";
-import ModalUpadateArticle from "../components/ModalUpadateArticle";
-import ModalUpadateWorkshop from "../components/ModalUpadateWorkshop";
 
 export default function Profile() {
   const [users, setUsers] = useState();
   const [currentUser, setCurrentUser] = useState();
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -111,20 +101,6 @@ export default function Profile() {
     } catch (error) {
       console.error("Error resetting role:", error);
     }
-  };
-
-  const customModalStyles = {
-    content: {
-      width: "60%",
-      margin: "auto",
-      border: "1px solid #ccc",
-      borderRadius: "8px",
-      padding: "20px",
-    },
-    overlay: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      zIndex: 20,
-    },
   };
 
   const handleGrantRole = async (userId) => {
@@ -336,7 +312,7 @@ export default function Profile() {
                     <td className="py-2 px-4  border-r">{user?.role}</td>
                     <td className="py-2 px-4  flex space-x-2 items-center">
                       {currentUser?.role === "admin" ||
-                        currentUser?.role === "root" ? (
+                      currentUser?.role === "root" ? (
                         <>
                           <button onClick={() => handleRemoveUser(user._id)}>
                             <svg
@@ -366,17 +342,21 @@ export default function Profile() {
                             </>
                           ) : (
                             <>
-                              {user?.role != "root" ? <button onClick={() => handleGrantRole(user._id)}>
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="#201818"
-                                  viewBox="0 0 256 256"
+                              {user?.role != "root" ? (
+                                <button
+                                  onClick={() => handleGrantRole(user._id)}
                                 >
-                                  <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"></path>
-                                </svg>
-                              </button> : null}
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    fill="#201818"
+                                    viewBox="0 0 256 256"
+                                  >
+                                    <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"></path>
+                                  </svg>
+                                </button>
+                              ) : null}
                             </>
                           )}
                         </>
@@ -414,8 +394,9 @@ export default function Profile() {
                     </td>
 
                     <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px]">
-
-                      <div className="line-clamp-2 text-ellipsis overflow-hidden w-[30px] md:w-auto lg:w-auto">{workshop.title}</div>
+                      <div className="line-clamp-2 text-ellipsis overflow-hidden w-[30px] md:w-auto lg:w-auto">
+                        {workshop.title}
+                      </div>
                     </td>
 
                     <td className="py-2 px-4 border-r  overflow-hidden  w-[200px] lg:w-auto">
@@ -469,7 +450,9 @@ export default function Profile() {
                       </div>
                     </td>
                     <td className="py-2 px-4  border-r  overflow-hidden  lg:w-auto w-[200px]">
-                      <div className="line-clamp-2 text-ellipsis overflow-hidden md:w-auto w-[30px] lg:w-auto">{education.title}</div>
+                      <div className="line-clamp-2 text-ellipsis overflow-hidden md:w-auto w-[30px] lg:w-auto">
+                        {education.title}
+                      </div>
                     </td>
                     <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px]">
                       <div className="line-clamp-2 ">{education.video}</div>
@@ -528,7 +511,9 @@ export default function Profile() {
                       />
                     </td>
                     <td className="py-2 px-4 border-b border-r  overflow-hidden lg:w-auto w-[200px]">
-                      <div className="line-clamp-2 text-ellipsis overflow-hidden md:w-auto w-[50px] lg:w-auto">{article.title}</div>
+                      <div className="line-clamp-2 text-ellipsis overflow-hidden md:w-auto w-[50px] lg:w-auto">
+                        {article.title}
+                      </div>
                     </td>
 
                     <td className="py-3 px-4 flex space-x-2 items-center">
@@ -562,7 +547,7 @@ export default function Profile() {
           {message}
         </div>
       )}
-      <div className="container mx-auto mt-8 lg:px-[20px] px-[10px]">
+      <div className="container mx-auto mt-8 lg:px-[20px] px-[10px] min-h-screen">
         <div className="flex flex-col lg:flex-row lg:justify-between mb-3">
           <h2 className="text-3xl font-semibold mb-4">User Dashboard</h2>
           <div className="flex space-x-2 flex-wrap gap-2">

@@ -11,7 +11,8 @@ export default function SerialEducation() {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_API_URL
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
         }/educations/search?q=${searchTerm}`
       );
 
@@ -53,7 +54,7 @@ export default function SerialEducation() {
   return (
     <>
       <Navbar />
-      <main className="py-[80px] px-[50px] flex lg:flex-row flex-col  lg:space-x-5 justify-center items-center ">
+      <main className="py-[20px] lg:py-[80px] lg:px-[50px] px-[20px] flex lg:flex-row flex-col  lg:space-x-5 justify-center items-center ">
         <div className="flex flex-col lg:w-[500px] w-full">
           <h1 className="text-[55px] font-semibold leading-[59px]">
             Serial Education Overview Challenge
@@ -102,12 +103,16 @@ export default function SerialEducation() {
           </div>
           <div className="grid lg:grid-cols-4 grid-cols-2 gap-4 mt-5">
             {educationsSearch.map((item, index) => {
-              return <Card
-                IdVideo={item.video}
-                type="education"
-                title={item.title}
-                key={index}
-              />
+              return (
+                <Card
+                  date={item.createdAt}
+                  IdVideo={item.video}
+                  type="education"
+                  content={item.image?.url}
+                  title={item.title}
+                  key={index}
+                />
+              );
             })}
           </div>
         </main>
@@ -122,8 +127,10 @@ export default function SerialEducation() {
           {educations.map((item, index) => {
             return (
               <Card
+                date={item.createdAt}
                 IdVideo={item.video}
                 type="education"
+                content={item.image?.url}
                 title={item.title}
                 key={index}
               />

@@ -5,7 +5,7 @@ export default function About() {
   return (
     <>
       <Navbar />
-      <main className="py-[20px] px-[50px]">
+      <main className="py-[20px] px-[20px] lg:px-[50px]">
         <div className="flex lg:flex-row flex-col  py-5 justify-between items-center">
           <div className="flex flex-col lg:w-[500px] w-full">
             <span className="text-black/50 font-semibold">
@@ -35,7 +35,7 @@ export default function About() {
           />
         </div>
       </main>
-      <main className="py-[40px] px-[50px] grid lg:grid-cols-2 grid-cols-1">
+      <main className="py-[40px] px-[20px] lg:px-[50px] grid lg:grid-cols-2 grid-cols-1">
         <img src="/home-2.png" alt="" />
 
         <div className="flex-flex col">
@@ -59,7 +59,7 @@ export default function About() {
           </div>
         </div>
       </main>
-      <main className="py-[40px] px-[50px] flex flex-col items-center ">
+      <main className="py-[40px] px-[20px] lg:px-[50px] flex flex-col items-center ">
         <h1 className="text-[32px] text-center font-semibold">
           Platform Eco Change Memiliki 3 Tujuan sebagai sarana
         </h1>

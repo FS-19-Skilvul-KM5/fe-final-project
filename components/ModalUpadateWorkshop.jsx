@@ -95,8 +95,9 @@ function ModalUpadateWorkshop({ workshopId }) {
     try {
       setIsLoading(true);
 
-      const apiUrl = `${import.meta.env.VITE_REACT_APP_API_URL
-        }/workshop/${workshopId}`;
+      const apiUrl = `${
+        import.meta.env.VITE_REACT_APP_API_URL
+      }/workshop/${workshopId}`;
       const formData = new FormData();
       formData.append("title", title);
       formData.append("files", image);
@@ -174,17 +175,16 @@ function ModalUpadateWorkshop({ workshopId }) {
     content: {
       margin: "auto",
       border: "1px solid #ccc",
-      borderRadius: "8px",
+      borderRadius: "15px",
       padding: "20px",
-      backgroundColor: 'white'
+      backgroundColor: "white",
     },
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
       zIndex: 20,
-      padding: '20px'
+      padding: "20px",
     },
   };
-
 
   return (
     <>
@@ -198,12 +198,20 @@ function ModalUpadateWorkshop({ workshopId }) {
         onRequestClose={handleCloseModal}
         contentLabel="Education Modal"
         style={customModalStyles}
-        className="w-full lg:w-[60%] overflow-y-auto h-full focus:outline-none"
+        className="w-full lg:w-[40%] overflow-y-auto h-auto max-h-full focus:outline-none "
       >
-        <button onClick={handleCloseModal}>X</button>
-
-        <div className="py-[20px] lg:px-[50px]  px-[10px] space-y-3 w-full">
-
+        <button className="mb-3" onClick={handleCloseModal}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            fill="#080808"
+            viewBox="0 0 256 256"
+          >
+            <path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+          </svg>
+        </button>
+        <div className="py-[20px] lg:px-[20px]  px-[10px] space-y-3 w-full">
           <div className="mb-5">
             <h1 className=" text-[42px] font-semibold leading-[48px]">
               Update Workshop
@@ -230,7 +238,7 @@ function ModalUpadateWorkshop({ workshopId }) {
             </label>
             <div className="flex items-center w-full space-x-2">
               <input
-                className="focus:outline-none h-[38px] p-2 border border-black/20 rounded-lg mt-1 flex-auto"
+                className="focus:outline-none h-[38px] p-2 border border-black/20 rounded-lg mt-1 w-full"
                 type="text"
                 id="materi"
                 value={newMateri}
@@ -290,7 +298,7 @@ function ModalUpadateWorkshop({ workshopId }) {
             </label>
             <div className="flex items-center w-full space-x-2">
               <input
-                className="focus:outline-none h-[38px] p-2 border border-black/20 rounded-lg mt-1 flex-auto"
+                className="focus:outline-none h-[38px] p-2 border border-black/20 rounded-lg mt-1 w-full"
                 type="text"
                 id="fasilitas"
                 onChange={(e) => setFasilitasInput(e.target.value)}
@@ -373,8 +381,8 @@ function ModalUpadateWorkshop({ workshopId }) {
               Format: {format(selectedDate, "EEEE, dd MMMM yyyy")}
             </p>
           </div>
-          <div className="w-full flex lg:flex-row flex-col lg:items-center lg:space-x-2 space-y-2">
-            <div className="flex lg:space-x-2 space-y-2 lg:space-y-0 lg:flex-row flex-col lg:items-center">
+          <div className="w-full flex  flex-col space-y-2">
+            <div className="flex  space-y-2 lg:space-y-0  flex-col ">
               <label htmlFor="startTime">Mulai:</label>
               <input
                 type="time"

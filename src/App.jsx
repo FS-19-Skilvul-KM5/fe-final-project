@@ -27,13 +27,13 @@ function App() {
   return (
     <>
       <Navbar />
-      <main className="py-[20px] px-[50px]">
-        <div className="flex lg:flex-row flex-col  py-5 justify-between items-center">
+      <main className="py-[20px] lg:px-[50px] px-[20px]">
+        <div className="flex lg:flex-row flex-col  py-5 justify-center lg:space-x-[100px] space-x-0 items-center">
           <div className="flex flex-col lg:w-[500px] w-full">
             <span className="text-black/50 font-semibold">
               Awali Tahun 2023 dengan{" "}
             </span>
-            <h1 className="text-[62px] font-semibold leading-[66px]">
+            <h1 className="text-[62px] font-semibold  leading-[66px]">
               30 Days
               <span className="text-[#004225]"> Eco Change</span> Challenge
             </h1>
@@ -106,8 +106,8 @@ function App() {
           </div>
         </div>
       </main>
-      <main className="lg:py-[120px] py-[80px] px-[50px]">
-        <div className="flex lg:flex-row flex-col  py-5 justify-between items-center">
+      <main className="lg:py-[120px] py-[80px] lg:px-[50px] px-[20px] ">
+        <div className=" flex lg:flex-row flex-col  py-5 justify-center lg:space-x-[100px] space-x-0 items-center">
           <div className="flex flex-col lg:w-[500px] w-full">
             <h1 className="text-[52px] font-semibold leading-[58px]">
               Apa itu <span className="text-[#004225]">Eco Change</span>& kenapa
@@ -196,6 +196,7 @@ function App() {
           {articles.map((item, index) => {
             return (
               <Card
+                date={item.createdAt}
                 type="article"
                 title={item.title}
                 imageUrl={item.image.url}

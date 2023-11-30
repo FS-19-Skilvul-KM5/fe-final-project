@@ -1,8 +1,10 @@
+import FooterAccordionItem from "./FooterAccordionItem";
+
 export default function Footer() {
   return (
-    <footer className="py-5 mt-10 ">
-      <div className="grid lg:grid-cols-4 grid-cols-1">
-        <div className="flex flex-col lg:px-[50px] px-[20px] col-span-1">
+    <footer className="mt-10 flex flex-col flex-grow ">
+      <div className="lg:grid lg:grid-cols-4 flex flex-col  ">
+        <div className="flex flex-col lg:px-[50px] px-[20px] col-span-1 mb-5 lg:mb-0">
           <div className="flex">
             <a href="/">
               <img src="/logo.png" alt="" width="40" height="40" />
@@ -48,55 +50,74 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <div className="flex flex-col ">
-          <h1 className="font-semibold lg:p-0 p-3 lg:text-left text-center">
-            Eco Change
-          </h1>
-          <ul className="p-3 lg:p-0 flex flex-col lg:items-start items-center">
-            <li className="">
-              <a href="/about" className="text-sm">
-                Tentang Kami
-              </a>
-            </li>
-            <li>
-              <a href="/" className="text-sm">
-                Artikel
-              </a>
-            </li>
-            <li>
-              <a href="/" className="text-sm">
-                Tim Kami
-              </a>
-            </li>
-          </ul>
+        <div className="hidden lg:block">
+          <div className="flex flex-col ">
+            <h1 className="font-semibold lg:p-0 p-3 lg:text-left text-center">
+              Eco Change
+            </h1>
+            <ul className="p-3 lg:p-0 flex flex-col lg:items-start items-center">
+              <li className="">
+                <a href="/about" className="text-sm">
+                  Tentang Kami
+                </a>
+              </li>
+              <li>
+                <a href="/articles" className="text-sm">
+                  Artikel
+                </a>
+              </li>
+              <li>
+                <a href="/" className="text-sm">
+                  Tim Kami
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="flex flex-col ">
-          <h1 className="font-semibold lg:p-0 p-3 lg:text-left text-center">
-            Layanan
-          </h1>
-          <ul className="p-3 lg:p-0 flex flex-col lg:items-start items-center">
-            <li>
-              <a href="/" className="text-sm">
-                Serial Edukasi
-              </a>
-            </li>
-            <li>
-              <a href="/" className="text-sm">
-                Workshop
-              </a>
-            </li>
-            <li>
-              <a href="/" className="text-sm">
-                Peta Minim Sampah
-              </a>
-            </li>
-          </ul>
+        <div className="hidden lg:block">
+          <div className="flex  flex-col ">
+            <h1 className="font-semibold lg:p-0 p-3 lg:text-left text-center">
+              Layanan
+            </h1>
+            <ul className="p-3 lg:p-0 flex flex-col lg:items-start items-center">
+              <li>
+                <a href="/educations" className="text-sm">
+                  Serial Edukasi
+                </a>
+              </li>
+              <li>
+                <a href="/workshop" className="text-sm">
+                  Workshop
+                </a>
+              </li>
+              <li>
+                <a href="/mapMini" className="text-sm">
+                  Peta Minim Sampah
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
+
+        <FooterAccordionItem
+          title="Eco Change"
+          items={[
+            { title: "Tentang Kami", url: "/about" },
+            { title: "Artikel", url: "/articles" },
+            { title: "Tim Kami", url: "/" },
+          ]}
+        />
+        <FooterAccordionItem
+          title="Layanan"
+          items={[
+            { title: "Serial Edukasi", url: "/educations" },
+            { title: "Workshop", url: "/workshop" },
+            { title: "Peta Minim Sampah", url: "/mapMini" },
+          ]}
+        />
         <div className="flex flex-col ">
-          <h1 className="font-semibold lg:p-0 p-3 lg:text-left text-center">
-            Kontak
-          </h1>
-          <ul className="p-3 lg:p-0 flex flex-col lg:items-start items-center">
+          <h1 className="font-semibold lg:p-0 p-3 ">Kontak</h1>
+          <ul className="px-3 lg:p-0 flex flex-col items-start">
             <li>
               <a href="/" className="text-sm">
                 ecochange@gmail.com
@@ -115,7 +136,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="flex mt-5 border-t border-black/10 lg:justify-end justify-center px-[50px]">
+      <div className="flex mt-5 px-5 border-t border-black/10 lg:justify-end justify-center items-center h-[40px] ">
         <h1 className="text-sm">©2023 - eco change | All right reserved</h1>
       </div>
     </footer>
