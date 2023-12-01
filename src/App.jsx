@@ -1,9 +1,29 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
+import Card from "../components/Card";
 
 function App() {
+  const [articles, setArticles] = useState([]);
 
+  useEffect(() => {
+    const fetchLatestArticles = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/articles/recommendations`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setArticles(data);
+      } catch (error) {
+        console.error("Error fetching latest articles:", error);
+      }
+    };
+
+    fetchLatestArticles();
+  }, []);
   return (
     <>
       <Navbar />
@@ -158,6 +178,33 @@ function App() {
             alt=""
             className="lg:w-[600px] w-full rounded-2xl object-cover h-[400px] lg:mt-0 mt-[30px]"
           />
+        </div>
+      </main>
+      <main className="lg:px-[50px] px-[20px] py-5">
+        <div className="flex justify-between items-center">
+          <h1 className="lg:text-[32px] text-[28px] font-semibold  w-[220px] lg:w-auto">
+            Rekomendasi artikel untuk mu
+          </h1>
+          <a
+            href="/articles"
+            className="font-semibold border rounded-full h-[42px] px-3 text-sm flex  hover:underline items-center text-[#186F65] border-[#186F65]"
+          >
+            Lihat artikel lain
+          </a>
+        </div>
+        <div className="grid lg:grid-cols-4 grid-cols-2 gap-4 mt-5">
+          {articles.map((item, index) => {
+            return (
+              <Card
+                date={item.createdAt}
+                type="article"
+                title={item.title}
+                imageUrl={item.image.url}
+                link={`/articles/${item._id}`}
+                key={index}
+              />
+            );
+          })}
         </div>
       </main>
       <Footer />
