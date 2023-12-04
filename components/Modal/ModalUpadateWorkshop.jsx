@@ -7,9 +7,9 @@ import PropTypes from "prop-types";
 function ModalUpadateWorkshop({ workshopId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [startTime, setStartTime] = useState("08:00");
-  const [endTime, setEndTime] = useState("13:00");
-  const [timezone, setTimezone] = useState("WIB");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [timezone, setTimezone] = useState("");
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [materiList, setMateriList] = useState([]);
@@ -25,13 +25,6 @@ function ModalUpadateWorkshop({ workshopId }) {
   const [newNarasumber, setNewNarasumber] = useState("");
   const [moderatorList, setModeratorList] = useState([]);
   const [newModerator, setNewModerator] = useState("");
-
-  const handleDateChange = (event) => {
-    const selectedDateString = event.target.value;
-    const parsedDate = parseISO(selectedDateString);
-    setSelectedDate(parsedDate);
-  };
-
   useEffect(() => {
     const fetchWorkshop = async () => {
       try {
@@ -47,10 +40,9 @@ function ModalUpadateWorkshop({ workshopId }) {
         setModeratorList(data?.moderator);
         setLocation(data?.location);
         setPrice(data?.price);
-        const parsedDate = parseISO(data?.date);
-        selectedDate(parsedDate);
+        setSelectedDate(parseISO(data?.date)); // Fix here
         setStartTime(data?.startTime);
-        setEndTime(data?.startTime);
+        setEndTime(data?.endTime);
         setTimezone(data?.timeZone);
       } catch (error) {
         console.error("Error fetching workshop:", error);
@@ -59,6 +51,12 @@ function ModalUpadateWorkshop({ workshopId }) {
 
     fetchWorkshop();
   }, [workshopId]);
+
+  const handleDateChange = (event) => {
+    const selectedDateString = event.target.value;
+    const parsedDate = parseISO(selectedDateString);
+    setSelectedDate(parsedDate);
+  };
 
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
@@ -166,26 +164,10 @@ function ModalUpadateWorkshop({ workshopId }) {
 
       const responseData = await response.json();
       if (response.ok) {
-        const resetForm = () => {
-          setImage(null);
-          setTitle("");
-          setNarasumberList([]);
-          setMateriList([]);
-          setTujuan("");
-          setFasilitasList([]);
-          setModeratorList([]);
-          setPrice("");
-          setLocation("");
-          setStartTime("08:00");
-          setEndTime("13:00");
-          setTimezone("WIB");
-          setSelectedDate(new Date());
-        };
         setMessage(responseData.message || "Workshop uploaded successfully");
 
         setTimeout(() => {
           setMessage("");
-          resetForm();
           if (typeof window !== "undefined") {
             // eslint-disable-next-line no-undef
             window.location.reload();
@@ -613,8 +595,8 @@ function ModalUpadateWorkshop({ workshopId }) {
               onChange={handleTimezoneChange}
             >
               <option value="WIB">WIB</option>
-              <option value="WIT">WIB</option>
-              <option value="WITA">WIB</option>
+              <option value="WIT">WIT</option>
+              <option value="WITA">WITA</option>
             </select>
 
             <p className="mt-1 text-sm">

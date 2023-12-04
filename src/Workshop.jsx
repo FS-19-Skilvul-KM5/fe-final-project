@@ -1,20 +1,20 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Card from "../components/Card";
+import Footer from "../components/Footer";
+import ModalRegisterWorkshop from "../components/Modal/ModalRegisterWorkshop";
+import Navbar from "../components/Navbar";
 import Cookies from "js-cookie";
 
 export default function Workshop() {
   const { id } = useParams();
   const [workshop, setWorkshop] = useState(null);
   const [freeWorkshops, setFreeWorkshops] = useState([]);
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
   const dateObject = workshop?.date ? new Date(workshop.date) : null;
   const formattedDate = dateObject
     ? dateObject.toISOString().split("T")[0]
     : "";
+  const token = Cookies.get("token");
 
   useEffect(() => {
     const fetchWorkshop = async () => {
@@ -48,57 +48,10 @@ export default function Workshop() {
     fetchWorkshop();
   }, [id]);
 
-  const uploadArticle = async () => {
-    try {
-      setLoading(true);
-      const apiUrl = `${
-        import.meta.env.VITE_REACT_APP_API_URL
-      }/workshop/${id}/peserta`;
-
-      const token = Cookies.get("token");
-
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const message = await response.json();
-
-      if (response.ok) {
-        setMessage("Success register workshop");
-
-        setTimeout(() => {
-          setMessage("");
-        }, 2000);
-        // eslint-disable-next-line no-undef
-        window?.location.reload();
-      } else {
-        setMessage(message.error);
-
-        setTimeout(() => {
-          setMessage("");
-        }, 2000);
-      }
-    } catch (error) {
-      setMessage(error);
-
-      setTimeout(() => {
-        setMessage("");
-      }, 2000);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <>
       <Navbar />
-      {message && (
-        <div className="bg-white border border-black/50 fixed top-[82px] right-5 text-black p-4 mb-4">
-          {message}
-        </div>
-      )}
+
       <main className="py-[20px] lg:px-[50px] px-[20px] flex flex-col lg:w-[70%] w-full  space-y-5 mb-5">
         <h1 className=" text-[50px] leading-[58px] font-semibold text-[#186F65] ">
           {workshop?.title}
@@ -222,21 +175,15 @@ export default function Workshop() {
               alt=""
             />
           </div>
-          {loading ? (
-            <div className="flex">
-              <div className="h-[38px]  text-sm  bg-[#186F65] text-white px-[20px] font-bold rounded-full mt-[20px]">
-                Is loading..
-              </div>
-            </div>
+          {!token ? (
+            <a
+              href="/signin"
+              className="h-[38px]  text-sm  bg-[#186F65] text-white px-[20px] font-bold rounded-full mt-[20px] flex items-center"
+            >
+              Log in
+            </a>
           ) : (
-            <div className="flex">
-              <button
-                onClick={() => uploadArticle()}
-                className="h-[38px]  text-sm  bg-[#186F65] text-white px-[20px] font-bold rounded-full mt-[20px]"
-              >
-                Daftar
-              </button>
-            </div>
+            <ModalRegisterWorkshop workshopId={workshop?._id} />
           )}
         </div>
       </main>

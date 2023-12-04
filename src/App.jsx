@@ -166,7 +166,7 @@ function App() {
             </div>
             <div className="flex mt-5">
               <a
-                href="/About"
+                href="/about"
                 className="h-[38px]  text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full"
               >
                 Selengkapnya
@@ -192,7 +192,7 @@ function App() {
             Lihat artikel lain
           </a>
         </div>
-        <div className="grid lg:grid-cols-4 grid-cols-2 gap-4 mt-5">
+        <div className="grid lg:grid-cols-5 grid-cols-2 gap-4 mt-5">
           {articles.map((item, index) => {
             return (
               <Card

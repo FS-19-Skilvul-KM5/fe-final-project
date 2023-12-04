@@ -6,7 +6,7 @@ export default function About() {
     <>
       <Navbar />
       <main className="py-[20px] px-[20px] lg:px-[50px]">
-        <div className="flex lg:flex-row flex-col  py-5 justify-between items-center">
+        <div className="flex lg:flex-row flex-col  py-5 justify-center lg:space-x-[100px] space-x-0 items-center">
           <div className="flex flex-col lg:w-[500px] w-full">
             <span className="text-black/50 font-semibold">
               Awali Tahun 2023 dengan
@@ -35,35 +35,41 @@ export default function About() {
           />
         </div>
       </main>
-      <main className="py-[40px] px-[20px] lg:px-[50px] grid lg:grid-cols-2 grid-cols-1">
-        <img src="/home-2.png" alt="" />
+      <main className="py-[20px] px-[20px] lg:px-[50px]">
+        <div className="flex lg:flex-row flex-col  py-5 justify-center lg:space-x-[200px] space-x-0 items-center">
+          <img src="/home-2.png" alt="" />
 
-        <div className="flex-flex col">
-          <h1 className="text-[32px] font-semibold">Tentang kami</h1>
-          <p className="text-[18px] font-medium">
-            Eco Change adalah Yayasan dan Wirausaha Sosial dengan komunitas
-            berbasis online di Indonesia yang didirikan pada tahun 2023 oleh Tim
-            FS-19 dengan tujuan mengajak masyarakat Indonesia untuk menjalani
-            gaya hidup bebas sampah (Zero Waste Lifestyle). Zero Waste Lifestyle
-            adalah sebuah gaya hidup untuk meminimalisasi produksi sampah yang
-            dihasilkan dari masing-masing individu yang akan berakhir di tempat
-            pembuangan akhir (TPA) dalam upaya menjaga kelestarian lingkungan.
-          </p>
-          <div className="flex mt-5">
-            <a
-              href="/"
-              className="h-[38px]  text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full"
-            >
-              Learn more
-            </a>
+          <div className="flex flex-col lg:w-[600px] w-full">
+            <div className="flex-flex col">
+              <h1 className="text-[32px] font-semibold">Tentang kami</h1>
+              <p className="text-[18px] font-medium">
+                Eco Change adalah Yayasan dan Wirausaha Sosial dengan komunitas
+                berbasis online di Indonesia yang didirikan pada tahun 2023 oleh Tim
+                FS-19 dengan tujuan mengajak masyarakat Indonesia untuk menjalani
+                gaya hidup bebas sampah (Zero Waste Lifestyle). Zero Waste Lifestyle
+                adalah sebuah gaya hidup untuk meminimalisasi produksi sampah yang
+                dihasilkan dari masing-masing individu yang akan berakhir di tempat
+                pembuangan akhir (TPA) dalam upaya menjaga kelestarian lingkungan.
+              </p>
+              <div className="flex mt-5">
+                <a
+                  href="/"
+                  className="h-[38px]  text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full"
+                >
+                  Learn more
+                </a>
+              </div>
+            </div>
           </div>
+
         </div>
       </main>
+
       <main className="py-[40px] px-[20px] lg:px-[50px] flex flex-col items-center ">
         <h1 className="text-[32px] text-center font-semibold">
           Platform Eco Change Memiliki 3 Tujuan sebagai sarana
         </h1>
-        <div className="flex lg:w-[700px] w-full justify-between relative mt-[80px]">
+        <div className="flex lg:w-[700px] z-0 w-full justify-between relative mt-[80px]">
           <div className="bg-black h-[1px] w-full absolute top-1/2"></div>
           <div className="w-[50px] h-[50px] bg-[#424B5A] text-white text-[22px] rounded-full flex justify-center items-center  z-10">
             1

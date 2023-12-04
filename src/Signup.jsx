@@ -7,6 +7,7 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
 
@@ -57,6 +58,7 @@ export default function Signup() {
       }, 2000);
     }
   };
+
   const isPasswordValid = () => {
     if (password.length > 0) {
       return password.length < 6;
