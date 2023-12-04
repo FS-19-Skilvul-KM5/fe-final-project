@@ -9,6 +9,7 @@ function ModalUpadateEducation({ educationId }) {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleRemoveImage = () => {
     setImage(null);
@@ -61,10 +62,10 @@ function ModalUpadateEducation({ educationId }) {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
-      const apiUrl = `${
-        import.meta.env.VITE_REACT_APP_API_URL
-      }/educations/${educationId}`;
+      const apiUrl = `${import.meta.env.VITE_REACT_APP_API_URL
+        }/educations/${educationId}`;
 
       const token = Cookies.get("token");
 
@@ -102,6 +103,8 @@ function ModalUpadateEducation({ educationId }) {
       }
     } catch (error) {
       console.error("Error updating data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -218,12 +221,16 @@ function ModalUpadateEducation({ educationId }) {
               </button>
             </div>
           )}
-          <button
+          {loading ? <div
+            className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
+          >
+            Lodaing...
+          </div> : <button
             onClick={() => handleSubmit()}
             className="h-[38px] lg:w-auto w-full justify-center text-sm flex items-center hover:bg-[#186F65] transition-all delay-75 border border-[#186F65] text-[#186F65] hover:text-white px-[20px] font-bold rounded-full "
           >
             Update
-          </button>
+          </button>}
         </div>
       </Modal>
       <button onClick={() => handleOpenModal()}>

@@ -2,11 +2,12 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-import ModalUpadateArticle from "../components/ModalUpadateArticle";
-import ModalUpadateEducation from "../components/ModalUpadateEducation";
-import ModalUpadateWorkshop from "../components/ModalUpadateWorkshop";
+import ModalUpadateArticle from "../components/Modal/ModalUpadateArticle";
+import ModalUpadateEducation from "../components/Modal/ModalUpadateEducation";
+import ModalUpadateWorkshop from "../components/Modal/ModalUpadateWorkshop";
 import Navbar from "../components/Navbar";
 import Tabs from "../components/Tab";
+import ModalShoAllWorkshop from "../components/Modal/ModalShoAllWorkshop";
 
 export default function Profile() {
   const [users, setUsers] = useState();
@@ -375,12 +376,14 @@ export default function Profile() {
         <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-md overflow-hidden">
           <thead className="bg-gray-100 border-b">
             <tr>
-              <th className="py-2 px-4 border-r text-left">ID</th>
-              <th className="py-2 px-4 border-r text-left">Image</th>
               <th className="py-2 px-4 border-r text-left lg:block hidden">
-                Title
+                ID
               </th>
-              <th className="py-2 px-4 border-r text-left">Tujuan</th>
+              <th className="py-2 px-4 border-r text-left ">Image</th>
+              <th className="py-2 px-4 border-r text-left ">Title</th>
+              <th className="py-2 px-4 border-r text-left lg:block hidden">
+                Tujuan
+              </th>
 
               <th className="py-2 px-4 text-left">Actions</th>
             </tr>
@@ -390,13 +393,13 @@ export default function Profile() {
               currentUser?.workshop.map((workshop, index) => {
                 return (
                   <tr className="border-b " key={index}>
-                    <td className="py-2 px-4 border-b border-r w-5 overflow-hidden cursor-pointer">
+                    <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto  flex-auto hidden lg:block">
                       <div className="text-ellipsis overflow-hidden w-[50px]">
                         {workshop._id}
                       </div>
                     </td>
 
-                    <td className="py-2 px-4  lg:block hidden">
+                    <td className="py-2 px-4">
                       <img
                         src={workshop.poster.url}
                         alt=""
@@ -404,22 +407,22 @@ export default function Profile() {
                       />
                     </td>
 
-                    <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[200px] ">
+                    <td className="py-2 px-4 border-r  overflow-hidden  lg:w-auto w-[150px] flex-auto ">
                       <div className="flex">
                         <a
                           href={`/workshop/${workshop._id}`}
-                          className="line-clamp-2 text-ellipsis overflow-hidden w-[30px] md:w-auto lg:w-auto hover:underline"
+                          className="line-clamp-2  text-ellipsis overflow-hidden md:w-auto lg:w-auto hover:underline"
                         >
                           {workshop.title}
                         </a>
                       </div>
                     </td>
 
-                    <td className="py-2 px-4 border-r  overflow-hidden  w-[200px] lg:w-auto">
-                      <div className="line-clamp-2 ">{workshop.tujuan}</div>
+                    <td className="py-2 px-4 border-r   overflow-hidden  lg:w-auto  flex-auto hidden lg:block">
+                      {workshop.tujuan}
                     </td>
 
-                    <td className="py-2 px-4 space-x-2 items-center  ">
+                    <td className="py-2 px-4 space-x-2 items-center ">
                       <button
                         onClick={() => handleRemoveWorkshop(workshop._id)}
                       >
@@ -434,6 +437,7 @@ export default function Profile() {
                         </svg>
                       </button>
                       <ModalUpadateWorkshop workshopId={workshop._id} />
+                      <ModalShoAllWorkshop workshopId={workshop._id} />
                     </td>
                   </tr>
                 );

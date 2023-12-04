@@ -1,4 +1,5 @@
 import Footer from "../components/Footer";
+import MapView from "../components/Map";
 import Navbar from "../components/Navbar";
 
 export default function MapMini() {
@@ -26,8 +27,8 @@ export default function MapMini() {
   return (
     <>
       <Navbar />
-      <main className="py-[20px] px-[20px] lg:px-[50px]">
-        <div className="flex lg:flex-row flex-col  py-5 justify-between items-center">
+      <main className="py-[20px] lg:px-[50px] px-[20px]">
+        <div className="flex lg:flex-row flex-col  py-5 justify-center lg:space-x-[100px] space-x-0 items-center">
           <div className="flex flex-col lg:w-[500px] w-full">
             <span className="text-black/50 font-semibold">
               Eco Change / Peta Minim Sampah{" "}
@@ -80,29 +81,10 @@ export default function MapMini() {
           })}
         </div>
       </main>
-      <main className="py-[20px] px-[20px] lg:px-[50px]">
-        <div className="flex lg:flex-row flex-col  py-5 justify-between items-center">
-          <div className="flex flex-col lg:w-[500px] w-full">
-            <span className="text-black/50 font-semibold">
-              Eco Change / Peta Minim Sampah{" "}
-            </span>
-            <h1 className="text-[52px] font-semibold leading-[58px]">
-              Peta Minim Sampah
-            </h1>
-            <p className="mt-5 text-black/60">
-              Peta minim sampah menunjukkan tempat-tempat yang akan membantu
-              kamu mengurangi dan mengolah sampah. Jika kamumemiliki bank sampah
-              yang ingin tampil dipeta ini, bisa kontak kami.
-            </p>
-          </div>
-          <img
-            src="/map-1.png"
-            alt=""
-            className="lg:w-[600px] w-full rounded-2xl object-cover h-[400px] lg:mt-0 mt-[30px]"
-          />
-        </div>
+
+      <main className="my-[50px]">
+        <MapView />
       </main>
-      <main></main>
       <Footer />
     </>
   );

@@ -37,55 +37,56 @@ export default function Navbar() {
           </a>
         </div>
         <div
-          className={`flex absolute  lg:flex-row flex-col lg:w-auto left-0 right-0 mx-[10px]  z-50 lg:left-1/2 lg:space-x-5 lg:visible top-[100%] lg:-translate-x-1/2 lg:top-1/2 lg:-translate-y-1/2 transition-all mt-1 lg:mt-0 ${
-            menuaOpen ? "visible bg-white  rounded-xl " : " invisible"
-          }`}
+          className={`flex absolute  lg:flex-row flex-col lg:w-auto left-0 right-0 mx-[10px]  z-50 lg:left-1/2 lg:space-x-5 lg:visible top-[100%] lg:-translate-x-1/2 lg:top-1/2 lg:-translate-y-1/2 transition-all lg:justify-center mt-1 lg:mt-0 ${menuaOpen ? "visible bg-white  rounded-xl " : " invisible"
+            }`}
         >
           <a
             href="/"
-            className={` font-semibold hover:text-black lg:p-0 p-5 ${
-              isNavLinkActive("/") ? "text-black opacity-100" : "text-black/50"
-            }`}
+            className={` font-semibold hover:text-black lg:p-0 p-5 ${isNavLinkActive("/") ? "text-black opacity-100" : "text-black/50"
+              }`}
           >
             Beranda
           </a>
           <a
             href="/articles"
-            className={` font-semibold hover:text-black lg:p-0 p-5 ${
-              isNavLinkActive("/articles")
-                ? "text-black opacity-100"
-                : "text-black/50"
-            }`}
+            className={` font-semibold hover:text-black lg:p-0 p-5 ${isNavLinkActive("/articles")
+              ? "text-black opacity-100"
+              : "text-black/50"
+              }`}
           >
             Articles
           </a>
           <a
             href="/educations"
-            className={` font-semibold hover:text-black lg:p-0 p-5 ${
-              isNavLinkActive("/educations")
-                ? "text-black opacity-100"
-                : "text-black/50"
-            }`}
+            className={` font-semibold hover:text-black lg:p-0 p-5 ${isNavLinkActive("/educations")
+              ? "text-black opacity-100"
+              : "text-black/50"
+              }`}
           >
             Belajar
           </a>
           <a
             href="/workshop"
-            className={`font-semibold hover:text-black lg:p-0 p-5 ${
-              isNavLinkActive("/workshop")
-                ? "text-black opacity-100"
-                : "text-black/50"
-            }`}
+            className={`font-semibold hover:text-black lg:p-0 p-5 ${isNavLinkActive("/workshop")
+              ? "text-black opacity-100"
+              : "text-black/50"
+              }`}
           >
             Workshop
           </a>
           <a
             href="/mapMini"
-            className={` font-semibold hover:text-black lg:p-0 p-5 ${
-              isNavLinkActive("/mapMini") ? "text-black/100" : "text-black/50"
-            }`}
+            className={` font-semibold hover:text-black lg:p-0 p-5 ${isNavLinkActive("/mapMini") ? "text-black/100" : "text-black/50"
+              }`}
           >
             Peta Minim Sampah
+          </a>
+          <a
+            href="/about"
+            className={` font-semibold hover:text-black lg:p-0 p-5 ${isNavLinkActive("/about") ? "text-black/100" : "text-black/50"
+              }`}
+          >
+            Tentang kami
           </a>
         </div>
         <div className="flex space-x-2">

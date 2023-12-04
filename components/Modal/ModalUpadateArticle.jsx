@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-import MarkdownEditor from "./MarkdownEditor";
+import MarkdownEditor from "../MarkdownEditor";
 import PropTypes from "prop-types";
 import Cookies from "js-cookie";
 
